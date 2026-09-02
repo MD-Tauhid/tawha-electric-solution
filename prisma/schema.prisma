@@ -1,0 +1,277 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================================
+// Auth & Users
+// ============================================================================
+
+enum UserRole {
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      UserRole @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ============================================================================
+// Customers
+// ============================================================================
+
+enum CustomerType {
+  RESIDENTIAL
+  COMMERCIAL
+  INDUSTRIAL
+  RESTAURANT
+  OTHER
+}
+
+model Customer {
+  id          String       @id @default(cuid())
+  name        String
+  companyName String?
+  email       String?
+  phone       String?
+  address     String?
+  city        String?
+  state       String?
+  zipCode     String?
+  type        CustomerType @default(OTHER)
+  notes       String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  projects  Project[]
+  proposals Proposal[]
+
+  @@index([name])
+  @@index([type])
+}
+
+// ============================================================================
+// Services
+// ============================================================================
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  rate        Decimal  @db.Decimal(12, 2)
+  unit        String   @default("sq ft")
+  isActive    Boolean  @default(true)
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  projectItems   ProjectItem[]
+  proposalItems  ProposalItem[]
+
+  @@index([name])
+  @@index([isActive])
+  @@index([isFeatured])
+}
+
+// ============================================================================
+// Projects
+// ============================================================================
+
+enum ProjectStatus {
+  PLANNED
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+model Project {
+  id                  String        @id @default(cuid())
+  projectNumber       String        @unique
+  name                String
+  description         String?
+  location            String?
+  status              ProjectStatus @default(PLANNED)
+  startDate           DateTime?
+  expectedEndDate     DateTime?
+  actualEndDate       DateTime?
+  notes               String?
+  totalValue          Decimal       @db.Decimal(12, 2) @default(0)
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  items  ProjectItem[]
+  bills  Bill[]
+
+  @@index([customerId])
+  @@index([status])
+  @@index([projectNumber])
+}
+
+model ProjectItem {
+  id          String  @id @default(cuid())
+  quantity    Decimal @db.Decimal(12, 2)
+  rate        Decimal @db.Decimal(12, 2)
+  totalAmount Decimal @db.Decimal(12, 2)
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  @@index([projectId])
+}
+
+// ============================================================================
+// Proposals
+// ============================================================================
+
+model Proposal {
+  id                String   @id @default(cuid())
+  proposalNumber    String   @unique
+  recipientName     String?
+  recipientAddress  String?
+  projectName       String?
+  projectAddress    String?
+  additionalCharges Decimal  @db.Decimal(12, 2) @default(0)
+  discount          Decimal  @db.Decimal(12, 2) @default(0)
+  totalAmount       Decimal  @db.Decimal(12, 2) @default(0)
+  terms             String?
+  notes             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id])
+
+  items ProposalItem[]
+
+  @@index([customerId])
+  @@index([proposalNumber])
+}
+
+model ProposalItem {
+  id          String  @id @default(cuid())
+  quantity    Decimal @db.Decimal(12, 2)
+  rate        Decimal @db.Decimal(12, 2)
+  totalAmount Decimal @db.Decimal(12, 2)
+
+  proposalId String
+  proposal   Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  @@index([proposalId])
+}
+
+// ============================================================================
+// Bills
+// ============================================================================
+
+enum BillStatus {
+  DRAFT
+  ISSUED
+  PARTIALLY_PAID
+  PAID
+  CANCELLED
+}
+
+model Bill {
+  id            String     @id @default(cuid())
+  billNumber    String     @unique
+  area          Decimal    @db.Decimal(12, 2)
+  rate          Decimal    @db.Decimal(12, 2)
+  totalAmount   Decimal    @db.Decimal(12, 2)
+  percentage    Decimal    @db.Decimal(5, 2)
+  payableAmount Decimal    @db.Decimal(12, 2)
+  status        BillStatus @default(DRAFT)
+  notes         String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
+
+  payments Payment[]
+
+  @@index([projectId])
+  @@index([billNumber])
+  @@index([status])
+}
+
+// ============================================================================
+// Payments
+// ============================================================================
+
+enum PaymentMethod {
+  CASH
+  BANK_TRANSFER
+  MOBILE_BANKING
+  CHEQUE
+  OTHER
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  amount        Decimal       @db.Decimal(12, 2)
+  paymentDate   DateTime
+  method        PaymentMethod
+  reference     String?
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  billId String
+  bill   Bill @relation(fields: [billId], references: [id])
+
+  @@index([billId])
+  @@index([paymentDate])
+}
+
+// ============================================================================
+// Company Settings
+// ============================================================================
+
+model CompanySettings {
+  id            String   @id @default(cuid())
+  companyName   String
+  phone         String?
+  email         String?
+  address       String?
+  whatsapp      String?
+  facebook      String?
+  instagram     String?
+  googleMapsUrl String?
+  businessHours String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// ============================================================================
+// Activity Log
+// ============================================================================
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String?
+  details   Json?
+  createdAt DateTime @default(now())
+
+  @@index([entity, entityId])
+  @@index([createdAt])
+}
