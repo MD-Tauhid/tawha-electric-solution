@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-<<<<<<< HEAD
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -41,18 +40,6 @@
   --border: #e2e8f0;
   --input: #e2e8f0;
   --ring: #1e40af;
-=======
-:root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
->>>>>>> 268d6e8e8b2c7468f6ea5fe11b6659b201d661fe
 }
 
 body {
