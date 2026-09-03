@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Download, Calendar } from "lucide-react";
+import { Download, Calendar, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -61,6 +61,14 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
       description={`For project ${bill.project.projectNumber}`}
       actions={
         <div className="flex items-center gap-2">
+          {outstandingAmount > 0 && bill.status !== "CANCELLED" && (
+            <Link href={`/admin/payments/new?billId=${id}`}>
+              <Button>
+                <CreditCard className="mr-2 h-4 w-4" />
+                Record Payment
+              </Button>
+            </Link>
+          )}
           <a
             href={`/api/bills/${id}/pdf`}
             target="_blank"
@@ -241,7 +249,12 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
                   {bill.payments.map((payment) => (
                     <TableRow key={payment.id}>
                       <TableCell>
-                        {new Date(payment.paymentDate).toLocaleDateString()}
+                        <Link
+                          href={`/admin/payments/${payment.id}`}
+                          className="hover:underline"
+                        >
+                          {new Date(payment.paymentDate).toLocaleDateString()}
+                        </Link>
                       </TableCell>
                       <TableCell>
                         <Badge variant="outline">
