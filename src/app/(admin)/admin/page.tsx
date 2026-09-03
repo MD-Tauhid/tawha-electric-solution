@@ -1,73 +1,80 @@
+import { Users, FolderKanban } from "lucide-react";
 import { DashboardShell } from "@/components/admin/dashboard-shell";
 import { StatsCard } from "@/components/admin/stats-card";
+import { DashboardStatsOverview } from "@/components/admin/dashboard/dashboard-stats-overview";
+import { MonthlyRevenueChart } from "@/components/admin/dashboard/monthly-revenue-chart";
+import { ProjectsByStatusChart } from "@/components/admin/dashboard/projects-by-status-chart";
+import { PaymentOverviewChart } from "@/components/admin/dashboard/payment-overview-chart";
+import { RecentActivitySection } from "@/components/admin/dashboard/recent-activity";
 import {
-  Users,
-  FolderKanban,
-  Receipt,
-  CreditCard,
-} from "lucide-react";
+  getDashboardStats,
+  getMonthlyRevenue,
+  getProjectsByStatus,
+  getPaymentOverview,
+  getRecentActivity,
+} from "@/lib/dashboard";
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
+  const [
+    stats,
+    monthlyRevenue,
+    projectsByStatus,
+    paymentOverview,
+    recentActivity,
+  ] = await Promise.all([
+    getDashboardStats(),
+    getMonthlyRevenue(),
+    getProjectsByStatus(),
+    getPaymentOverview(),
+    getRecentActivity(),
+  ]);
+
   return (
     <DashboardShell
       title="Dashboard"
       description="Welcome to the Tawha Electrical admin panel."
     >
+      {/* Top-level count stats */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatsCard
           title="Total Customers"
-          value="—"
-          description="Customer data coming soon"
+          value={stats.totalCustomers}
+          description="Registered customers"
           icon={<Users className="h-5 w-5" />}
         />
         <StatsCard
-          title="Active Projects"
-          value="—"
-          description="Project tracking coming soon"
+          title="Total Projects"
+          value={stats.totalProjects}
+          description={`${stats.ongoingProjects} ongoing, ${stats.completedProjects} completed`}
           icon={<FolderKanban className="h-5 w-5" />}
         />
         <StatsCard
-          title="Pending Bills"
-          value="—"
-          description="Billing system coming soon"
-          icon={<Receipt className="h-5 w-5" />}
+          title="Ongoing Projects"
+          value={stats.ongoingProjects}
+          description="Currently in progress"
+          icon={<FolderKanban className="h-5 w-5 text-amber-500" />}
         />
         <StatsCard
-          title="Payments"
-          value="—"
-          description="Payment tracking coming soon"
-          icon={<CreditCard className="h-5 w-5" />}
+          title="Completed Projects"
+          value={stats.completedProjects}
+          description="Successfully finished"
+          icon={<FolderKanban className="h-5 w-5 text-green-500" />}
         />
       </div>
 
-      <div className="mt-8 rounded-lg border bg-white p-6 shadow-sm">
-        <h2 className="text-lg font-semibold">Getting Started</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The admin dashboard will display real-time analytics and business
-          metrics once the following features are implemented:
-        </p>
-        <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-          <li className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Customer management
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Service catalog
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Project tracking
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Billing and invoicing
-          </li>
-          <li className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Payment processing
-          </li>
-        </ul>
+      {/* Financial overview */}
+      <DashboardStatsOverview stats={stats} />
+
+      {/* Charts row */}
+      <div className="grid gap-4 lg:grid-cols-2">
+        <MonthlyRevenueChart data={monthlyRevenue} />
+        <ProjectsByStatusChart data={projectsByStatus} />
+      </div>
+
+      {/* Payment overview and recent activity */}
+      <div className="grid gap-4 lg:grid-cols-2">
+        <PaymentOverviewChart data={paymentOverview} />
+        <RecentActivitySection activities={recentActivity} />
       </div>
     </DashboardShell>
   );
