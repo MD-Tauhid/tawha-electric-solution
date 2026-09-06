@@ -10,14 +10,14 @@ export default async function AdminLayout({
   const session = await requireAuth();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background lg:flex">
       {/* Desktop Sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72">
-        <Sidebar />
+      <div className="hidden lg:inset-y-0 lg:z-50 lg:flex lg:w-62">
+        <Sidebar className="w-full" />
       </div>
 
       {/* Main Content Area */}
-      <div className="lg:pl-72">
+      <div className="grow flex flex-col">
         <AdminHeader
           user={{
             name: session.user.name,

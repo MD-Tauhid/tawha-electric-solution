@@ -29,7 +29,7 @@ interface AdminHeaderProps {
 
 export function AdminHeader({ breadcrumbs = [], user }: AdminHeaderProps) {
   return (
-    <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b border-border bg-card/80 backdrop-blur-sm px-4 sm:px-6">
+    <header className="sticky top-0 z-40 flex h-16 items-center gap-4 border-b border-border bg-card/80 backdrop-blur-sm px-4 sm:px-6">
       <MobileSidebar />
       <Separator orientation="vertical" className="h-5 lg:hidden" />
       {breadcrumbs.length > 0 && (
