@@ -52,13 +52,13 @@ export default async function AdminDashboard() {
           title="Ongoing Projects"
           value={stats.ongoingProjects}
           description="Currently in progress"
-          icon={<FolderKanban className="h-5 w-5 text-amber-500" />}
+          icon={<FolderKanban className="h-5 w-5 text-blue-600" />}
         />
         <StatsCard
           title="Completed Projects"
           value={stats.completedProjects}
           description="Successfully finished"
-          icon={<FolderKanban className="h-5 w-5 text-green-500" />}
+          icon={<FolderKanban className="h-5 w-5 text-emerald-600" />}
         />
       </div>
 

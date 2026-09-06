@@ -9,9 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { DashboardShell } from "@/components/admin/dashboard-shell";
 import { EmptyState } from "@/components/shared/empty-state";
+import { StatusBadge } from "@/components/shared/status-badge";
 import { getProjects } from "./actions";
 import { ProjectFilters } from "./project-filters";
 import { ProjectPagination } from "./project-pagination";
@@ -24,20 +24,6 @@ interface ProjectsPageProps {
     page?: string;
   }>;
 }
-
-const projectStatusLabels: Record<string, string> = {
-  PLANNED: "Planned",
-  ONGOING: "Ongoing",
-  COMPLETED: "Completed",
-  CANCELLED: "Cancelled",
-};
-
-const projectStatusVariants: Record<string, "default" | "secondary" | "success" | "warning" | "destructive"> = {
-  PLANNED: "secondary",
-  ONGOING: "default",
-  COMPLETED: "success",
-  CANCELLED: "destructive",
-};
 
 export default async function ProjectsPage({ searchParams }: ProjectsPageProps) {
   const params = await searchParams;
@@ -88,10 +74,10 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
         />
       ) : (
         <>
-          <div className="rounded-lg border bg-white">
+          <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="hover:bg-transparent">
                   <TableHead>Project Number</TableHead>
                   <TableHead>Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Customer</TableHead>
@@ -105,30 +91,28 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
                 {result.projects.map((project) => (
                   <TableRow key={project.id}>
                     <TableCell>
-                      <span className="font-mono text-sm">
+                      <span className="font-mono text-sm text-muted-foreground">
                         {project.projectNumber}
                       </span>
                     </TableCell>
                     <TableCell>
                       <Link
                         href={`/admin/projects/${project.id}`}
-                        className="font-medium hover:underline"
+                        className="font-medium text-card-foreground hover:text-primary transition-colors"
                       >
                         {project.name}
                       </Link>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {project.customer.companyName || project.customer.name}
                     </TableCell>
                     <TableCell>
-                      <Badge variant={projectStatusVariants[project.status] || "secondary"}>
-                        {projectStatusLabels[project.status] || project.status}
-                      </Badge>
+                      <StatusBadge status={project.status} />
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell font-medium">
                       ${Number(project.totalValue).toLocaleString()}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {project._count.items}
                     </TableCell>
                     <TableCell className="text-right">

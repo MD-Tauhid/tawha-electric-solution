@@ -75,10 +75,10 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
         />
       ) : (
         <>
-          <div className="rounded-lg border bg-white">
+          <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="hover:bg-transparent">
                   <TableHead>Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Description</TableHead>
                   <TableHead>Rate</TableHead>
@@ -94,18 +94,18 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                     <TableCell>
                       <Link
                         href={`/admin/services/${service.id}`}
-                        className="font-medium hover:underline"
+                        className="font-medium text-card-foreground hover:text-primary transition-colors"
                       >
                         {service.name}
                       </Link>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell max-w-[200px] truncate">
+                    <TableCell className="hidden sm:table-cell max-w-[200px] truncate text-muted-foreground">
                       {service.description || "—"}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="font-medium">
                       ${Number(service.rate).toLocaleString()}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {service.unit}
                     </TableCell>
                     <TableCell>

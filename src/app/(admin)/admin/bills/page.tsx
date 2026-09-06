@@ -9,9 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { DashboardShell } from "@/components/admin/dashboard-shell";
 import { EmptyState } from "@/components/shared/empty-state";
+import { StatusBadge } from "@/components/shared/status-badge";
 import { getBills } from "./actions";
 import { BillFilters } from "./bill-filters";
 import { BillPagination } from "./bill-pagination";
@@ -24,25 +24,6 @@ interface BillsPageProps {
     page?: string;
   }>;
 }
-
-const billStatusLabels: Record<string, string> = {
-  DRAFT: "Draft",
-  ISSUED: "Issued",
-  PARTIALLY_PAID: "Partially Paid",
-  PAID: "Paid",
-  CANCELLED: "Cancelled",
-};
-
-const billStatusVariants: Record<
-  string,
-  "default" | "secondary" | "success" | "warning" | "destructive"
-> = {
-  DRAFT: "secondary",
-  ISSUED: "default",
-  PARTIALLY_PAID: "warning",
-  PAID: "success",
-  CANCELLED: "destructive",
-};
 
 export default async function BillsPage({ searchParams }: BillsPageProps) {
   const params = await searchParams;
@@ -99,10 +80,10 @@ export default async function BillsPage({ searchParams }: BillsPageProps) {
         />
       ) : (
         <>
-          <div className="rounded-lg border bg-white">
+          <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="hover:bg-transparent">
                   <TableHead>Bill Number</TableHead>
                   <TableHead className="hidden sm:table-cell">
                     Project
@@ -120,37 +101,31 @@ export default async function BillsPage({ searchParams }: BillsPageProps) {
                 {result.bills.map((bill) => (
                   <TableRow key={bill.id}>
                     <TableCell>
-                      <span className="font-mono text-sm">
+                      <span className="font-mono text-sm text-muted-foreground">
                         {bill.billNumber}
                       </span>
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">
                       <Link
                         href={`/admin/projects/${bill.project.id}`}
-                        className="font-medium hover:underline"
+                        className="font-medium text-card-foreground hover:text-primary transition-colors"
                       >
                         {bill.project.projectNumber}
                       </Link>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {bill.project.customer.companyName ||
                         bill.project.customer.name}
                     </TableCell>
                     <TableCell>
-                      <span className="font-medium">
+                      <span className="font-medium text-card-foreground">
                         ${Number(bill.payableAmount).toLocaleString()}
                       </span>
                     </TableCell>
                     <TableCell>
-                      <Badge
-                        variant={
-                          billStatusVariants[bill.status] || "secondary"
-                        }
-                      >
-                        {billStatusLabels[bill.status] || bill.status}
-                      </Badge>
+                      <StatusBadge status={bill.status} />
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {new Date(bill.createdAt).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="text-right">

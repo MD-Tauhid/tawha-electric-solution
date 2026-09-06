@@ -63,14 +63,14 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
           {/* Recipient Information */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Recipient Information</h2>
-            <div className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Recipient Information</h2>
+            <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <p className="text-sm text-muted-foreground">Customer</p>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Customer</p>
                 <Link
                   href={`/admin/customers/${proposal.customer.id}`}
-                  className="text-sm font-medium hover:underline"
+                  className="text-sm font-medium text-card-foreground hover:text-primary transition-colors mt-1 block"
                 >
                   {proposal.customer.name}
                 </Link>
@@ -82,16 +82,18 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
               </div>
               {proposal.recipientName && (
                 <div>
-                  <p className="text-sm text-muted-foreground">Recipient</p>
-                  <p className="text-sm font-medium">{proposal.recipientName}</p>
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Recipient</p>
+                  <p className="text-sm font-medium text-card-foreground mt-1">{proposal.recipientName}</p>
                 </div>
               )}
               {proposal.recipientAddress && (
                 <div className="flex items-start gap-3 sm:col-span-2">
-                  <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted">
+                    <MapPin className="h-4 w-4 text-muted-foreground" />
+                  </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Address</p>
-                    <p className="text-sm">{proposal.recipientAddress}</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Address</p>
+                    <p className="text-sm text-card-foreground mt-1">{proposal.recipientAddress}</p>
                   </div>
                 </div>
               )}
@@ -100,21 +102,23 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
 
           {/* Project Information */}
           {(proposal.projectName || proposal.projectAddress) && (
-            <div className="rounded-lg border bg-white p-6">
-              <h2 className="text-lg font-semibold mb-4">Project Information</h2>
-              <div className="grid gap-4 sm:grid-cols-2">
+            <div className="rounded-xl border border-border/60 bg-card p-6">
+              <h2 className="text-base font-semibold text-card-foreground mb-4">Project Information</h2>
+              <div className="grid gap-5 sm:grid-cols-2">
                 {proposal.projectName && (
                   <div>
-                    <p className="text-sm text-muted-foreground">Project Name</p>
-                    <p className="text-sm font-medium">{proposal.projectName}</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Project Name</p>
+                    <p className="text-sm font-medium text-card-foreground mt-1">{proposal.projectName}</p>
                   </div>
                 )}
                 {proposal.projectAddress && (
                   <div className="flex items-start gap-3">
-                    <MapPin className="h-4 w-4 text-muted-foreground mt-0.5" />
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted">
+                      <MapPin className="h-4 w-4 text-muted-foreground" />
+                    </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Address</p>
-                      <p className="text-sm">{proposal.projectAddress}</p>
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Address</p>
+                      <p className="text-sm text-card-foreground mt-1">{proposal.projectAddress}</p>
                     </div>
                   </div>
                 )}
@@ -123,14 +127,14 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
           )}
 
           {/* Services/Items */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Services</h2>
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Services</h2>
             {proposal.items.length === 0 ? (
               <p className="text-sm text-muted-foreground">No services added.</p>
             ) : (
               <Table>
                 <TableHeader>
-                  <TableRow>
+                  <TableRow className="hover:bg-transparent">
                     <TableHead>Service</TableHead>
                     <TableHead className="text-right">Quantity</TableHead>
                     <TableHead className="text-right">Rate</TableHead>
@@ -142,19 +146,19 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
                     <TableRow key={item.id}>
                       <TableCell>
                         <div>
-                          <p className="font-medium">{item.service.name}</p>
+                          <p className="font-medium text-card-foreground">{item.service.name}</p>
                           <p className="text-xs text-muted-foreground">
                             Rate snapshot: ${Number(item.rate).toLocaleString()}/{item.service.unit}
                           </p>
                         </div>
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-right text-card-foreground">
                         {Number(item.quantity).toLocaleString()}
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-right text-card-foreground">
                         ${Number(item.rate).toLocaleString()}
                       </TableCell>
-                      <TableCell className="text-right font-medium">
+                      <TableCell className="text-right font-medium text-card-foreground">
                         ${Number(item.totalAmount).toLocaleString()}
                       </TableCell>
                     </TableRow>
@@ -166,9 +170,9 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
 
           {/* Terms */}
           {proposal.terms && (
-            <div className="rounded-lg border bg-white p-6">
-              <h2 className="text-lg font-semibold mb-2">Terms & Conditions</h2>
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+            <div className="rounded-xl border border-border/60 bg-card p-6">
+              <h2 className="text-base font-semibold text-card-foreground mb-2">Terms & Conditions</h2>
+              <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
                 {proposal.terms}
               </p>
             </div>
@@ -176,9 +180,9 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
 
           {/* Notes */}
           {proposal.notes && (
-            <div className="rounded-lg border bg-white p-6">
-              <h2 className="text-lg font-semibold mb-2">Notes</h2>
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+            <div className="rounded-xl border border-border/60 bg-card p-6">
+              <h2 className="text-base font-semibold text-card-foreground mb-2">Notes</h2>
+              <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
                 {proposal.notes}
               </p>
             </div>
@@ -188,34 +192,35 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Financial Summary */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Financial Summary</h2>
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Financial Summary</h2>
             <div className="space-y-3">
-              <div className="flex justify-between">
+              <div className="flex justify-between items-center">
                 <span className="text-sm text-muted-foreground">Services Total</span>
-                <span className="text-sm font-medium">
+                <span className="text-sm font-medium text-card-foreground">
                   ${itemsTotal.toLocaleString()}
                 </span>
               </div>
               {Number(proposal.additionalCharges) > 0 && (
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">Additional Charges</span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-card-foreground">
                     +${Number(proposal.additionalCharges).toLocaleString()}
                   </span>
                 </div>
               )}
               {Number(proposal.discount) > 0 && (
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">Discount</span>
                   <span className="text-sm font-medium text-destructive">
                     -${Number(proposal.discount).toLocaleString()}
                   </span>
                 </div>
               )}
-              <div className="flex justify-between border-t pt-3">
-                <span className="text-sm font-semibold">Total Amount</span>
-                <span className="text-lg font-bold">
+              <div className="h-px bg-border" />
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-semibold text-card-foreground">Total Amount</span>
+                <span className="text-xl font-bold text-card-foreground">
                   ${Number(proposal.totalAmount).toLocaleString()}
                 </span>
               </div>
@@ -223,12 +228,12 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
           </div>
 
           {/* Customer Info */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Customer</h2>
-            <div className="space-y-2">
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Customer</h2>
+            <div className="space-y-1.5">
               <Link
                 href={`/admin/customers/${proposal.customer.id}`}
-                className="text-sm font-medium hover:underline"
+                className="text-sm font-medium text-card-foreground hover:text-primary transition-colors"
               >
                 {proposal.customer.name}
               </Link>
@@ -251,23 +256,27 @@ export default async function ProposalViewPage({ params }: ProposalViewPageProps
           </div>
 
           {/* Timeline */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Timeline</h2>
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Timeline</h2>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Created</p>
-                  <p className="text-sm font-medium">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Created</p>
+                  <p className="text-sm font-medium text-card-foreground">
                     {new Date(proposal.createdAt).toLocaleDateString()}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Updated</p>
-                  <p className="text-sm font-medium">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Updated</p>
+                  <p className="text-sm font-medium text-card-foreground">
                     {new Date(proposal.updatedAt).toLocaleDateString()}
                   </p>
                 </div>

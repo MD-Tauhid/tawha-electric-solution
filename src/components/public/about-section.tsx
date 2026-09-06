@@ -32,7 +32,7 @@ export function AboutSection() {
               Electrical Excellence,{" "}
               <span className="gradient-text">Built on Trust</span>
             </h2>
-            <p className="mt-6 text-lg text-slate-300 leading-relaxed">
+            <p className="mt-6 text-lg text-slate-300/90 leading-relaxed">
               Tawha Electrical Solution has been at the forefront of electrical
               engineering and services, delivering safe, reliable, and
               innovative solutions across Bangladesh. Our team of licensed
@@ -40,7 +40,7 @@ export function AboutSection() {
               planning and circuit design to full-scale wiring, installation,
               and ongoing maintenance.
             </p>
-            <p className="mt-4 text-base text-slate-400 leading-relaxed">
+            <p className="mt-4 text-base text-slate-400/80 leading-relaxed">
               We adhere strictly to national and international electrical safety
               standards, ensuring every connection, circuit, and system we
               implement meets the highest benchmarks of quality and reliability.
@@ -60,7 +60,7 @@ export function AboutSection() {
                   transition={{ duration: 0.4, delay: i * 0.1 }}
                   className="flex items-center gap-4"
                 >
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/20">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/15">
                     <stat.icon className="h-6 w-6 text-blue-400" />
                   </div>
                   <div>
@@ -80,9 +80,9 @@ export function AboutSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-blue-600/20 to-cyan-600/20 border border-blue-500/20 p-8 sm:p-12">
+            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-blue-600/15 to-cyan-600/15 border border-blue-500/15 p-8 sm:p-12">
               {/* Decorative grid */}
-              <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0 opacity-[0.07]">
                 <div
                   className="h-full w-full"
                   style={{
@@ -93,12 +93,12 @@ export function AboutSection() {
                 />
               </div>
 
-              <div className="relative z-10 space-y-8">
-                <div className="rounded-xl bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 p-6">
-                  <h3 className="text-lg font-semibold text-white mb-3">
+              <div className="relative z-10 space-y-6">
+                <div className="rounded-xl bg-slate-900/40 backdrop-blur-sm border border-slate-700/40 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-2">
                     Our Mission
                   </h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                  <p className="text-slate-300/80 text-sm leading-relaxed">
                     To provide world-class electrical solutions that prioritize
                     safety, efficiency, and long-term reliability — empowering
                     homes, businesses, and industries with dependable power
@@ -106,11 +106,11 @@ export function AboutSection() {
                   </p>
                 </div>
 
-                <div className="rounded-xl bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 p-6">
-                  <h3 className="text-lg font-semibold text-white mb-3">
+                <div className="rounded-xl bg-slate-900/40 backdrop-blur-sm border border-slate-700/40 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-2">
                     Our Standards
                   </h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                  <p className="text-slate-300/80 text-sm leading-relaxed">
                     Every project follows strict compliance with Bangladesh
                     Electrical Building Code, IEEE standards, and international
                     safety regulations. We use premium-grade materials and
@@ -118,11 +118,11 @@ export function AboutSection() {
                   </p>
                 </div>
 
-                <div className="rounded-xl bg-slate-900/50 backdrop-blur-sm border border-slate-700/50 p-6">
-                  <h3 className="text-lg font-semibold text-white mb-3">
+                <div className="rounded-xl bg-slate-900/40 backdrop-blur-sm border border-slate-700/40 p-6">
+                  <h3 className="text-lg font-semibold text-white mb-2">
                     Our Promise
                   </h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                  <p className="text-slate-300/80 text-sm leading-relaxed">
                     Transparent pricing, on-time delivery, and zero compromise
                     on safety. We stand behind our work with comprehensive
                     warranties and dedicated after-service support.
@@ -132,8 +132,8 @@ export function AboutSection() {
             </div>
 
             {/* Glow accent */}
-            <div className="absolute -top-4 -right-4 h-32 w-32 rounded-full bg-blue-600/20 blur-3xl" />
-            <div className="absolute -bottom-4 -left-4 h-24 w-24 rounded-full bg-cyan-600/20 blur-3xl" />
+            <div className="absolute -top-4 -right-4 h-32 w-32 rounded-full bg-blue-600/15 blur-3xl" />
+            <div className="absolute -bottom-4 -left-4 h-24 w-24 rounded-full bg-cyan-600/15 blur-3xl" />
           </motion.div>
         </div>
       </div>

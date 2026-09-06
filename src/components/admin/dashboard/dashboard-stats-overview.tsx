@@ -17,100 +17,60 @@ function formatCurrency(value: number): string {
   })}`;
 }
 
+interface FinancialCardProps {
+  title: string;
+  value: string;
+  description: string;
+  icon: React.ReactNode;
+  iconColor?: string;
+}
+
+function FinancialCard({ title, value, description, icon, iconColor = "text-muted-foreground" }: FinancialCardProps) {
+  return (
+    <div className="rounded-xl border border-border/60 bg-card p-5">
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0 space-y-1.5">
+          <p className="text-sm font-medium text-muted-foreground truncate">{title}</p>
+          <p className="text-2xl font-bold tracking-tight text-card-foreground">{value}</p>
+          <p className="text-xs text-muted-foreground">{description}</p>
+        </div>
+        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted ${iconColor}`}>
+          {icon}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function DashboardStatsOverview({ stats }: DashboardStatsOverviewProps) {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <div className="rounded-lg border bg-white p-6 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <p className="text-sm font-medium text-muted-foreground">
-              Total Project Value
-            </p>
-            <p className="text-2xl font-bold">
-              {formatCurrency(stats.totalProjectValue)}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Across all projects
-            </p>
-          </div>
-          <div className="text-muted-foreground">
-            <DollarSign className="h-5 w-5" />
-          </div>
-        </div>
-      </div>
-
-      <div className="rounded-lg border bg-white p-6 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <p className="text-sm font-medium text-muted-foreground">
-              Total Billed
-            </p>
-            <p className="text-2xl font-bold">
-              {formatCurrency(stats.totalBilled)}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Payable amounts
-            </p>
-          </div>
-          <div className="text-muted-foreground">
-            <TrendingUp className="h-5 w-5" />
-          </div>
-        </div>
-      </div>
-
-      <div className="rounded-lg border bg-white p-6 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <p className="text-sm font-medium text-muted-foreground">
-              Total Collected
-            </p>
-            <p className="text-2xl font-bold text-green-600">
-              {formatCurrency(stats.totalCollected)}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Payments received
-            </p>
-          </div>
-          <div className="text-green-600">
-            <TrendingUp className="h-5 w-5" />
-          </div>
-        </div>
-      </div>
-
-      <div className="rounded-lg border bg-white p-6 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <p className="text-sm font-medium text-muted-foreground">
-              Outstanding
-            </p>
-            <p
-              className={`text-2xl font-bold ${
-                stats.totalOutstanding > 0
-                  ? "text-destructive"
-                  : "text-green-600"
-              }`}
-            >
-              {formatCurrency(stats.totalOutstanding)}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Pending collection
-            </p>
-          </div>
-          <div
-            className={
-              stats.totalOutstanding > 0
-                ? "text-destructive"
-                : "text-green-600"
-            }
-          >
-            {stats.totalOutstanding > 0 ? (
-              <AlertCircle className="h-5 w-5" />
-            ) : (
-              <TrendingDown className="h-5 w-5" />
-            )}
-          </div>
-        </div>
-      </div>
+      <FinancialCard
+        title="Total Project Value"
+        value={formatCurrency(stats.totalProjectValue)}
+        description="Across all projects"
+        icon={<DollarSign className="h-5 w-5" />}
+      />
+      <FinancialCard
+        title="Total Billed"
+        value={formatCurrency(stats.totalBilled)}
+        description="Payable amounts"
+        icon={<TrendingUp className="h-5 w-5" />}
+      />
+      <FinancialCard
+        title="Total Collected"
+        value={formatCurrency(stats.totalCollected)}
+        description="Payments received"
+        icon={<TrendingUp className="h-5 w-5" />}
+        iconColor="text-emerald-600"
+      />
+      <FinancialCard
+        title="Outstanding"
+        value={formatCurrency(stats.totalOutstanding)}
+        description="Pending collection"
+        icon={stats.totalOutstanding > 0 ? <AlertCircle className="h-5 w-5" /> : <TrendingDown className="h-5 w-5" />}
+        iconColor={stats.totalOutstanding > 0 ? "text-destructive" : "text-emerald-600"}
+      />
     </div>
   );
 }

@@ -15,10 +15,10 @@ interface ProjectsByStatusChartProps {
 }
 
 const STATUS_COLORS: Record<string, string> = {
-  PLANNED: "#6366f1",
-  ONGOING: "#f59e0b",
-  COMPLETED: "#22c55e",
-  CANCELLED: "#ef4444",
+  PLANNED: "#64748b",
+  ONGOING: "#1e40af",
+  COMPLETED: "#059669",
+  CANCELLED: "#dc2626",
 };
 
 export function ProjectsByStatusChart({ data }: ProjectsByStatusChartProps) {
@@ -33,23 +33,23 @@ export function ProjectsByStatusChart({ data }: ProjectsByStatusChartProps) {
     }));
 
   return (
-    <div className="rounded-lg border bg-white p-6 shadow-sm">
-      <h2 className="text-lg font-semibold mb-4">Projects by Status</h2>
+    <div className="rounded-xl border border-border/60 bg-card p-6">
+      <h2 className="text-base font-semibold text-card-foreground mb-4">Projects by Status</h2>
       {!hasData ? (
-        <div className="flex h-[300px] items-center justify-center text-sm text-muted-foreground">
+        <div className="flex h-[280px] items-center justify-center text-sm text-muted-foreground">
           No projects available yet.
         </div>
       ) : (
-        <div className="h-[300px]">
+        <div className="h-[280px]">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
                 data={chartData}
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
-                outerRadius={100}
-                paddingAngle={4}
+                innerRadius={55}
+                outerRadius={90}
+                paddingAngle={3}
                 dataKey="count"
                 nameKey="label"
               >
@@ -64,15 +64,16 @@ export function ProjectsByStatusChart({ data }: ProjectsByStatusChartProps) {
                 ]}
                 contentStyle={{
                   borderRadius: "8px",
-                  border: "1px solid #e5e7eb",
-                  boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                  border: "1px solid #e2e8f0",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                  fontSize: "13px",
                 }}
               />
               <Legend
                 verticalAlign="bottom"
                 height={36}
                 formatter={(value) => (
-                  <span className="text-sm">{value}</span>
+                  <span className="text-sm text-muted-foreground">{value}</span>
                 )}
               />
             </PieChart>

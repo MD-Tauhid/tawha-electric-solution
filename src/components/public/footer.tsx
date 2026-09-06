@@ -18,39 +18,39 @@ export function Footer({ settings }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-950 border-t border-slate-800">
+    <footer className="bg-slate-950 border-t border-slate-800/60">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Main footer */}
         <div className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 group-hover:bg-blue-500 transition-colors">
-                <Zap className="h-6 w-6 text-white" />
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 group-hover:bg-blue-500 transition-colors">
+                <Zap className="h-5 w-5 text-white" />
               </div>
               <div>
-                <p className="text-lg font-bold text-white leading-tight">
+                <p className="text-base font-bold text-white leading-tight">
                   {settings.companyName.split(" ").slice(0, 2).join(" ")}
                 </p>
-                <p className="text-xs text-slate-400 leading-tight">
+                <p className="text-xs text-slate-500 leading-tight">
                   {settings.companyName.split(" ").slice(2).join(" ") ||
                     "Electrical"}
                 </p>
               </div>
             </Link>
-            <p className="mt-4 text-sm text-slate-400 leading-relaxed">
+            <p className="mt-4 text-sm text-slate-400/80 leading-relaxed">
               Professional electrical services for residential, commercial, and
               industrial needs. Licensed, certified, and committed to safety.
             </p>
 
             {/* Social */}
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex gap-2">
               {settings.whatsapp && (
                 <a
                   href={settings.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800 text-slate-400 hover:text-green-400 hover:bg-slate-700 transition-colors"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800/60 text-slate-400 hover:text-green-400 hover:bg-slate-800 transition-colors"
                   aria-label="WhatsApp"
                 >
                   <MessageCircle className="h-4 w-4" />
@@ -61,7 +61,7 @@ export function Footer({ settings }: FooterProps) {
                   href={settings.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800 text-slate-400 hover:text-blue-400 hover:bg-slate-700 transition-colors"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800/60 text-slate-400 hover:text-blue-400 hover:bg-slate-800 transition-colors"
                   aria-label="Facebook"
                 >
                   <Facebook className="h-4 w-4" />
@@ -72,7 +72,7 @@ export function Footer({ settings }: FooterProps) {
                   href={settings.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800 text-slate-400 hover:text-pink-400 hover:bg-slate-700 transition-colors"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800/60 text-slate-400 hover:text-pink-400 hover:bg-slate-800 transition-colors"
                   aria-label="Instagram"
                 >
                   <Instagram className="h-4 w-4" />
@@ -83,7 +83,7 @@ export function Footer({ settings }: FooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-5">
               Quick Links
             </h3>
             <ul className="space-y-3">
@@ -96,7 +96,7 @@ export function Footer({ settings }: FooterProps) {
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-white transition-colors"
+                    className="text-sm text-slate-400/80 hover:text-white transition-colors"
                   >
                     {link.label}
                   </a>
@@ -107,7 +107,7 @@ export function Footer({ settings }: FooterProps) {
 
           {/* Services */}
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-5">
               Services
             </h3>
             <ul className="space-y-3">
@@ -122,7 +122,7 @@ export function Footer({ settings }: FooterProps) {
                 <li key={service}>
                   <a
                     href="#services"
-                    className="text-sm text-slate-400 hover:text-white transition-colors"
+                    className="text-sm text-slate-400/80 hover:text-white transition-colors"
                   >
                     {service}
                   </a>
@@ -133,7 +133,7 @@ export function Footer({ settings }: FooterProps) {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
+            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-5">
               Contact Info
             </h3>
             <ul className="space-y-4">
@@ -141,7 +141,7 @@ export function Footer({ settings }: FooterProps) {
                 <li>
                   <a
                     href={`tel:${settings.phone}`}
-                    className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors"
+                    className="flex items-center gap-3 text-sm text-slate-400/80 hover:text-white transition-colors"
                   >
                     <Phone className="h-4 w-4 shrink-0 text-blue-400" />
                     {settings.phone}
@@ -152,7 +152,7 @@ export function Footer({ settings }: FooterProps) {
                 <li>
                   <a
                     href={`mailto:${settings.email}`}
-                    className="flex items-center gap-3 text-sm text-slate-400 hover:text-white transition-colors"
+                    className="flex items-center gap-3 text-sm text-slate-400/80 hover:text-white transition-colors"
                   >
                     <Mail className="h-4 w-4 shrink-0 text-blue-400" />
                     {settings.email}
@@ -160,7 +160,7 @@ export function Footer({ settings }: FooterProps) {
                 </li>
               )}
               {settings.address && (
-                <li className="flex items-start gap-3 text-sm text-slate-400">
+                <li className="flex items-start gap-3 text-sm text-slate-400/80">
                   <MapPin className="h-4 w-4 shrink-0 mt-0.5 text-blue-400" />
                   {settings.address}
                 </li>
@@ -175,7 +175,7 @@ export function Footer({ settings }: FooterProps) {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-slate-800 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="border-t border-slate-800/60 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500">
             © {currentYear} {settings.companyName}. All rights reserved.
           </p>

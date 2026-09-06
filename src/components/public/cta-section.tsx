@@ -12,9 +12,9 @@ export function CtaSection({ phone }: CtaSectionProps) {
     <section className="relative py-24 sm:py-32 bg-slate-950 overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full bg-blue-600/10 blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full bg-blue-600/8 blur-3xl" />
         <div
-          className="absolute inset-0 opacity-5"
+          className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage:
               "linear-gradient(rgba(59,130,246,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.5) 1px, transparent 1px)",
@@ -29,7 +29,7 @@ export function CtaSection({ phone }: CtaSectionProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
-          className="rounded-3xl bg-gradient-to-br from-blue-600/20 via-slate-900/80 to-cyan-600/20 border border-blue-500/20 p-8 sm:p-12 lg:p-16 text-center"
+          className="rounded-3xl bg-gradient-to-br from-blue-600/15 via-slate-900/80 to-cyan-600/15 border border-blue-500/15 p-8 sm:p-12 lg:p-16 text-center"
         >
           <div className="mx-auto max-w-3xl">
             <motion.div
@@ -37,9 +37,9 @@ export function CtaSection({ phone }: CtaSectionProps) {
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 mx-auto mb-8"
+              className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 mx-auto mb-8"
             >
-              <Zap className="h-8 w-8 text-white" />
+              <Zap className="h-7 w-7 text-white" />
             </motion.div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight">
@@ -47,7 +47,7 @@ export function CtaSection({ phone }: CtaSectionProps) {
               <span className="gradient-text">Your Project?</span>
             </h2>
 
-            <p className="mt-6 text-lg text-slate-300 max-w-xl mx-auto">
+            <p className="mt-6 text-lg text-slate-300/80 max-w-xl mx-auto leading-relaxed">
               Whether you need a full electrical installation, a safety
               inspection, or emergency repairs — our expert team is ready to
               deliver.
@@ -56,14 +56,14 @@ export function CtaSection({ phone }: CtaSectionProps) {
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-4 text-base font-semibold text-white hover:bg-blue-500 transition-all hover:shadow-xl hover:shadow-blue-600/25 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-8 py-3.5 text-base font-semibold text-white hover:bg-blue-500 transition-all duration-200 hover:shadow-lg hover:shadow-blue-600/20"
               >
                 Request Free Estimate
                 <ArrowRight className="h-5 w-5" />
               </a>
               <a
                 href={`tel:${phone}`}
-                className="inline-flex items-center gap-2 rounded-xl border border-slate-600 bg-white/5 px-8 py-4 text-base font-semibold text-white hover:bg-white/10 transition-all"
+                className="inline-flex items-center gap-2 rounded-xl border border-slate-600/50 bg-white/5 px-8 py-3.5 text-base font-semibold text-white hover:bg-white/10 transition-all duration-200"
               >
                 <Phone className="h-5 w-5" />
                 Call Now

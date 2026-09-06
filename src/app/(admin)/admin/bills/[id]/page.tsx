@@ -2,7 +2,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Download, Calendar, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -12,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { DashboardShell } from "@/components/admin/dashboard-shell";
+import { StatusBadge } from "@/components/shared/status-badge";
 import { getBill } from "../actions";
 import { DeleteBillButton } from "./delete-button";
 import { StatusUpdateButton } from "./status-update-button";
@@ -19,25 +19,6 @@ import { StatusUpdateButton } from "./status-update-button";
 interface BillViewPageProps {
   params: Promise<{ id: string }>;
 }
-
-const billStatusLabels: Record<string, string> = {
-  DRAFT: "Draft",
-  ISSUED: "Issued",
-  PARTIALLY_PAID: "Partially Paid",
-  PAID: "Paid",
-  CANCELLED: "Cancelled",
-};
-
-const billStatusVariants: Record<
-  string,
-  "default" | "secondary" | "success" | "warning" | "destructive"
-> = {
-  DRAFT: "secondary",
-  ISSUED: "default",
-  PARTIALLY_PAID: "warning",
-  PAID: "success",
-  CANCELLED: "destructive",
-};
 
 export default async function BillViewPage({ params }: BillViewPageProps) {
   const { id } = await params;
@@ -87,19 +68,13 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-6">
           {/* Bill Details */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Bill Details</h2>
-            <div className="grid gap-4 sm:grid-cols-2">
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Bill Details</h2>
+            <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <p className="text-sm text-muted-foreground">Status</p>
-                <div className="mt-1 flex items-center gap-2">
-                  <Badge
-                    variant={
-                      billStatusVariants[bill.status] || "secondary"
-                    }
-                  >
-                    {billStatusLabels[bill.status] || bill.status}
-                  </Badge>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Status</p>
+                <div className="mt-1.5 flex items-center gap-2">
+                  <StatusBadge status={bill.status} />
                   <StatusUpdateButton
                     billId={id}
                     currentStatus={
@@ -113,11 +88,13 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
                   />
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-muted">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Created</p>
-                  <p className="text-sm">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Created</p>
+                  <p className="mt-1 text-sm text-card-foreground">
                     {new Date(bill.createdAt).toLocaleDateString()}
                   </p>
                 </div>
@@ -126,45 +103,40 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
           </div>
 
           {/* Bill Calculation */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Calculation</h2>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <div className="flex justify-between">
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Calculation</h2>
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">Area</span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-card-foreground">
                     {Number(bill.area).toLocaleString()} sq ft
                   </span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <span className="text-sm text-muted-foreground">Rate</span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-card-foreground">
                     ${Number(bill.rate).toLocaleString()} / sq ft
                   </span>
                 </div>
               </div>
-              <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Total Amount
-                  </span>
-                  <span className="text-sm font-medium">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-muted-foreground">Total Amount</span>
+                  <span className="text-sm font-medium text-card-foreground">
                     ${Number(bill.totalAmount).toLocaleString()}
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-muted-foreground">
-                    Percentage to Pay
-                  </span>
-                  <span className="text-sm font-medium">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm text-muted-foreground">Percentage to Pay</span>
+                  <span className="text-sm font-medium text-card-foreground">
                     {Number(bill.percentage).toLocaleString()}%
                   </span>
                 </div>
-                <div className="flex justify-between border-t pt-2">
-                  <span className="text-sm font-semibold">
-                    Payable Amount
-                  </span>
-                  <span className="text-lg font-bold">
+                <div className="h-px bg-border" />
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-semibold text-card-foreground">Payable Amount</span>
+                  <span className="text-xl font-bold text-card-foreground">
                     ${Number(bill.payableAmount).toLocaleString()}
                   </span>
                 </div>
@@ -174,13 +146,11 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
 
           {/* Project Items */}
           {bill.project.items.length > 0 && (
-            <div className="rounded-lg border bg-white p-6">
-              <h2 className="text-lg font-semibold mb-4">
-                Project Items
-              </h2>
+            <div className="rounded-xl border border-border/60 bg-card p-6">
+              <h2 className="text-base font-semibold text-card-foreground mb-4">Project Items</h2>
               <Table>
                 <TableHeader>
-                  <TableRow>
+                  <TableRow className="hover:bg-transparent">
                     <TableHead>Service</TableHead>
                     <TableHead className="text-right">Quantity</TableHead>
                     <TableHead className="text-right">Rate</TableHead>
@@ -192,7 +162,7 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
                     <TableRow key={item.id}>
                       <TableCell>
                         <div>
-                          <p className="font-medium">{item.service.name}</p>
+                          <p className="font-medium text-card-foreground">{item.service.name}</p>
                           <p className="text-xs text-muted-foreground">
                             Rate snapshot: $
                             {Number(item.rate).toLocaleString()}/
@@ -200,13 +170,13 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
                           </p>
                         </div>
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-right text-card-foreground">
                         {Number(item.quantity).toLocaleString()}
                       </TableCell>
-                      <TableCell className="text-right">
+                      <TableCell className="text-right text-card-foreground">
                         ${Number(item.rate).toLocaleString()}
                       </TableCell>
-                      <TableCell className="text-right font-medium">
+                      <TableCell className="text-right font-medium text-card-foreground">
                         ${Number(item.totalAmount).toLocaleString()}
                       </TableCell>
                     </TableRow>
@@ -218,25 +188,25 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
 
           {/* Notes */}
           {bill.notes && (
-            <div className="rounded-lg border bg-white p-6">
-              <h2 className="text-lg font-semibold mb-2">Notes</h2>
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+            <div className="rounded-xl border border-border/60 bg-card p-6">
+              <h2 className="text-base font-semibold text-card-foreground mb-2">Notes</h2>
+              <p className="text-sm text-muted-foreground whitespace-pre-wrap leading-relaxed">
                 {bill.notes}
               </p>
             </div>
           )}
 
           {/* Payment History */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Payment History</h2>
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Payment History</h2>
             {bill.payments.length === 0 ? (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground py-4 text-center">
                 No payments recorded yet.
               </p>
             ) : (
               <Table>
                 <TableHeader>
-                  <TableRow>
+                  <TableRow className="hover:bg-transparent">
                     <TableHead>Date</TableHead>
                     <TableHead>Method</TableHead>
                     <TableHead className="hidden sm:table-cell">
@@ -251,20 +221,18 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
                       <TableCell>
                         <Link
                           href={`/admin/payments/${payment.id}`}
-                          className="hover:underline"
+                          className="text-card-foreground hover:text-primary transition-colors"
                         >
                           {new Date(payment.paymentDate).toLocaleDateString()}
                         </Link>
                       </TableCell>
                       <TableCell>
-                        <Badge variant="outline">
-                          {payment.method.replace("_", " ")}
-                        </Badge>
+                        <StatusBadge status={payment.method} />
                       </TableCell>
-                      <TableCell className="hidden sm:table-cell">
+                      <TableCell className="hidden sm:table-cell text-muted-foreground">
                         {payment.reference || "—"}
                       </TableCell>
-                      <TableCell className="text-right font-medium">
+                      <TableCell className="text-right font-medium text-card-foreground">
                         ${Number(payment.amount).toLocaleString()}
                       </TableCell>
                     </TableRow>
@@ -278,34 +246,29 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
         {/* Sidebar */}
         <div className="space-y-6">
           {/* Payment Summary */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Payment Summary</h2>
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Payment Summary</h2>
             <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Payable Amount
-                </span>
-                <span className="text-sm font-medium">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">Payable Amount</span>
+                <span className="text-sm font-medium text-card-foreground">
                   ${Number(bill.payableAmount).toLocaleString()}
                 </span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Total Paid
-                </span>
-                <span className="text-sm font-medium text-green-600">
+              <div className="flex justify-between items-center">
+                <span className="text-sm text-muted-foreground">Total Paid</span>
+                <span className="text-sm font-medium text-emerald-600">
                   ${totalPaid.toLocaleString()}
                 </span>
               </div>
-              <div className="flex justify-between border-t pt-3">
-                <span className="text-sm font-semibold">
-                  Outstanding
-                </span>
+              <div className="h-px bg-border" />
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-semibold text-card-foreground">Outstanding</span>
                 <span
-                  className={`text-lg font-bold ${
+                  className={`text-xl font-bold ${
                     outstandingAmount > 0
                       ? "text-destructive"
-                      : "text-green-600"
+                      : "text-emerald-600"
                   }`}
                 >
                   ${outstandingAmount.toLocaleString()}
@@ -315,12 +278,12 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
           </div>
 
           {/* Project Info */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Project</h2>
-            <div className="space-y-2">
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Project</h2>
+            <div className="space-y-1.5">
               <Link
                 href={`/admin/projects/${bill.project.id}`}
-                className="text-sm font-medium hover:underline"
+                className="text-sm font-medium text-card-foreground hover:text-primary transition-colors"
               >
                 {bill.project.name}
               </Link>
@@ -331,12 +294,12 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
           </div>
 
           {/* Customer Info */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Customer</h2>
-            <div className="space-y-2">
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Customer</h2>
+            <div className="space-y-1.5">
               <Link
                 href={`/admin/customers/${bill.project.customer.id}`}
-                className="text-sm font-medium hover:underline"
+                className="text-sm font-medium text-card-foreground hover:text-primary transition-colors"
               >
                 {bill.project.customer.name}
               </Link>
@@ -359,23 +322,27 @@ export default async function BillViewPage({ params }: BillViewPageProps) {
           </div>
 
           {/* Timeline */}
-          <div className="rounded-lg border bg-white p-6">
-            <h2 className="text-lg font-semibold mb-4">Timeline</h2>
+          <div className="rounded-xl border border-border/60 bg-card p-6">
+            <h2 className="text-base font-semibold text-card-foreground mb-4">Timeline</h2>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Created</p>
-                  <p className="text-sm font-medium">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Created</p>
+                  <p className="text-sm font-medium text-card-foreground">
                     {new Date(bill.createdAt).toLocaleDateString()}
                   </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-muted">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Updated</p>
-                  <p className="text-sm font-medium">
+                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Updated</p>
+                  <p className="text-sm font-medium text-card-foreground">
                     {new Date(bill.updatedAt).toLocaleDateString()}
                   </p>
                 </div>

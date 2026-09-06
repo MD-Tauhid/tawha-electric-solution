@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, FolderKanban, Calendar, Package, StickyNote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -177,8 +177,11 @@ export function ProjectForm({
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
       {/* Basic Info */}
-      <div className="rounded-lg border bg-white p-6">
-        <h2 className="text-lg font-semibold mb-4">Project Information</h2>
+      <div className="rounded-xl border border-border/60 bg-card p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <FolderKanban className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-base font-semibold text-card-foreground">Project Information</h2>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2">
           {/* Name */}
           <div className="space-y-2">
@@ -248,8 +251,11 @@ export function ProjectForm({
       </div>
 
       {/* Dates */}
-      <div className="rounded-lg border bg-white p-6">
-        <h2 className="text-lg font-semibold mb-4">Schedule</h2>
+      <div className="rounded-xl border border-border/60 bg-card p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Calendar className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-base font-semibold text-card-foreground">Schedule</h2>
+        </div>
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="space-y-2">
             <Label htmlFor="startDate">Start Date</Label>
@@ -279,9 +285,12 @@ export function ProjectForm({
       </div>
 
       {/* Project Items */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold">Project Items</h2>
+          <div className="flex items-center gap-2">
+            <Package className="h-4 w-4 text-muted-foreground" />
+            <h2 className="text-base font-semibold text-card-foreground">Project Items</h2>
+          </div>
           <Button type="button" variant="outline" size="sm" onClick={addItem}>
             <Plus className="mr-2 h-4 w-4" />
             Add Item
@@ -393,10 +402,10 @@ export function ProjectForm({
         </div>
 
         {/* Total Value */}
-        <div className="mt-6 flex justify-end">
+        <div className="mt-6 pt-4 border-t border-border/60 flex justify-end">
           <div className="text-right">
             <p className="text-sm text-muted-foreground">Total Project Value</p>
-            <p className="text-2xl font-bold">
+            <p className="text-2xl font-bold text-card-foreground">
               ${totalValue.toLocaleString()}
             </p>
           </div>
@@ -404,8 +413,11 @@ export function ProjectForm({
       </div>
 
       {/* Notes */}
-      <div className="rounded-lg border bg-white p-6">
-        <h2 className="text-lg font-semibold mb-4">Notes</h2>
+      <div className="rounded-xl border border-border/60 bg-card p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <StickyNote className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-base font-semibold text-card-foreground">Notes</h2>
+        </div>
         <Textarea
           id="notes"
           placeholder="Additional notes about this project..."
@@ -415,7 +427,7 @@ export function ProjectForm({
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
           {project ? "Update Project" : "Create Project"}

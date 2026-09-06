@@ -71,10 +71,10 @@ export default async function ProposalsPage({ searchParams }: ProposalsPageProps
         />
       ) : (
         <>
-          <div className="rounded-lg border bg-white">
+          <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="hover:bg-transparent">
                   <TableHead>Proposal Number</TableHead>
                   <TableHead>Customer</TableHead>
                   <TableHead className="hidden sm:table-cell">Project</TableHead>
@@ -89,28 +89,28 @@ export default async function ProposalsPage({ searchParams }: ProposalsPageProps
                 {result.proposals.map((proposal) => (
                   <TableRow key={proposal.id}>
                     <TableCell>
-                      <span className="font-mono text-sm">
+                      <span className="font-mono text-sm text-muted-foreground">
                         {proposal.proposalNumber}
                       </span>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-card-foreground">
                       {proposal.customer.companyName || proposal.customer.name}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {proposal.projectName || "—"}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {proposal.recipientName || "—"}
                     </TableCell>
                     <TableCell>
-                      <span className="font-medium">
+                      <span className="font-medium text-card-foreground">
                         ${Number(proposal.totalAmount).toLocaleString()}
                       </span>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {proposal._count.items}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {new Date(proposal.createdAt).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="text-right">

@@ -27,7 +27,6 @@ export function ContactSection({ settings }: ContactSectionProps) {
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setFormStatus("submitting");
-    // Simulate submission
     setTimeout(() => {
       setFormStatus("success");
       setTimeout(() => setFormStatus("idle"), 5000);
@@ -54,7 +53,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
             Let&apos;s{" "}
             <span className="gradient-text">Talk Power</span>
           </h2>
-          <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-slate-400/80 max-w-2xl mx-auto">
             Reach out to us for a free consultation, emergency service, or to
             discuss your next electrical project.
           </p>
@@ -68,14 +67,14 @@ export function ContactSection({ settings }: ContactSectionProps) {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <div className="rounded-2xl bg-slate-900/60 border border-slate-800 p-8">
+            <div className="rounded-2xl bg-slate-900/50 border border-slate-800/60 p-8">
               <h3 className="text-xl font-bold text-white mb-6">
                 Send Us a Message
               </h3>
 
               {formStatus === "success" ? (
                 <div className="flex flex-col items-center py-12 text-center">
-                  <CheckCircle className="h-16 w-16 text-green-400 mb-4" />
+                  <CheckCircle className="h-16 w-16 text-emerald-400 mb-4" />
                   <h4 className="text-lg font-semibold text-white mb-2">
                     Message Sent!
                   </h4>
@@ -97,7 +96,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
                         type="text"
                         id="name"
                         required
-                        className="w-full rounded-lg bg-slate-800/50 border border-slate-700 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full rounded-lg bg-slate-800/40 border border-slate-700/60 px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
                         placeholder="John Doe"
                       />
                     </div>
@@ -112,7 +111,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
                         type="email"
                         id="email"
                         required
-                        className="w-full rounded-lg bg-slate-800/50 border border-slate-700 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                        className="w-full rounded-lg bg-slate-800/40 border border-slate-700/60 px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
                         placeholder="john@example.com"
                       />
                     </div>
@@ -128,7 +127,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
                     <input
                       type="tel"
                       id="phone-input"
-                      className="w-full rounded-lg bg-slate-800/50 border border-slate-700 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      className="w-full rounded-lg bg-slate-800/40 border border-slate-700/60 px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
                       placeholder="+880 1XXX-XXXXXX"
                     />
                   </div>
@@ -142,7 +141,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
                     </label>
                     <select
                       id="service"
-                      className="w-full rounded-lg bg-slate-800/50 border border-slate-700 px-4 py-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                      className="w-full rounded-lg bg-slate-800/40 border border-slate-700/60 px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all appearance-none"
                     >
                       <option value="">Select a service...</option>
                       <option value="wiring">Wiring & Installation</option>
@@ -166,7 +165,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
                       id="message"
                       rows={4}
                       required
-                      className="w-full rounded-lg bg-slate-800/50 border border-slate-700 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                      className="w-full rounded-lg bg-slate-800/40 border border-slate-700/60 px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all resize-none"
                       placeholder="Tell us about your project..."
                     />
                   </div>
@@ -174,7 +173,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
                   <button
                     type="submit"
                     disabled={formStatus === "submitting"}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:shadow-lg hover:shadow-blue-600/25"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
                   >
                     {formStatus === "submitting" ? (
                       <>
@@ -202,7 +201,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
             className="space-y-6"
           >
             {/* Contact cards */}
-            <div className="rounded-2xl bg-slate-900/60 border border-slate-800 p-8">
+            <div className="rounded-2xl bg-slate-900/50 border border-slate-800/60 p-8">
               <h3 className="text-xl font-bold text-white mb-6">
                 Contact Information
               </h3>
@@ -213,11 +212,11 @@ export function ContactSection({ settings }: ContactSectionProps) {
                     href={`tel:${settings.phone}`}
                     className="flex items-center gap-4 group"
                   >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/20 group-hover:bg-blue-600/20 transition-colors">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/15 group-hover:bg-blue-600/15 transition-colors">
                       <Phone className="h-5 w-5 text-blue-400" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Phone</p>
+                      <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Phone</p>
                       <p className="text-white font-medium group-hover:text-blue-300 transition-colors">
                         {settings.phone}
                       </p>
@@ -230,11 +229,11 @@ export function ContactSection({ settings }: ContactSectionProps) {
                     href={`mailto:${settings.email}`}
                     className="flex items-center gap-4 group"
                   >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/20 group-hover:bg-blue-600/20 transition-colors">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/15 group-hover:bg-blue-600/15 transition-colors">
                       <Mail className="h-5 w-5 text-blue-400" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Email</p>
+                      <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Email</p>
                       <p className="text-white font-medium group-hover:text-blue-300 transition-colors">
                         {settings.email}
                       </p>
@@ -244,11 +243,11 @@ export function ContactSection({ settings }: ContactSectionProps) {
 
                 {settings.address && (
                   <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/20">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/15">
                       <MapPin className="h-5 w-5 text-blue-400" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Address</p>
+                      <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Address</p>
                       <p className="text-white font-medium">
                         {settings.address}
                       </p>
@@ -258,11 +257,11 @@ export function ContactSection({ settings }: ContactSectionProps) {
 
                 {settings.businessHours && (
                   <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/20">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/15">
                       <Clock className="h-5 w-5 text-blue-400" />
                     </div>
                     <div>
-                      <p className="text-sm text-slate-500">Business Hours</p>
+                      <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">Business Hours</p>
                       <p className="text-white font-medium">
                         {settings.businessHours}
                       </p>
@@ -276,7 +275,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
             {(settings.whatsapp ||
               settings.facebook ||
               settings.instagram) && (
-              <div className="rounded-2xl bg-slate-900/60 border border-slate-800 p-8">
+              <div className="rounded-2xl bg-slate-900/50 border border-slate-800/60 p-8">
                 <h3 className="text-lg font-bold text-white mb-4">
                   Follow Us
                 </h3>
@@ -286,7 +285,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
                       href={settings.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-12 w-12 items-center justify-center rounded-xl bg-green-600/10 border border-green-500/20 text-green-400 hover:bg-green-600/20 transition-colors"
+                      className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-600/10 border border-green-500/15 text-green-400 hover:bg-green-600/15 transition-colors"
                       aria-label="WhatsApp"
                     >
                       <MessageCircle className="h-5 w-5" />
@@ -297,7 +296,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
                       href={settings.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/20 text-blue-400 hover:bg-blue-600/20 transition-colors"
+                      className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/15 text-blue-400 hover:bg-blue-600/15 transition-colors"
                       aria-label="Facebook"
                     >
                       <Facebook className="h-5 w-5" />
@@ -308,7 +307,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
                       href={settings.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-600/10 border border-pink-500/20 text-pink-400 hover:bg-pink-600/20 transition-colors"
+                      className="flex h-11 w-11 items-center justify-center rounded-xl bg-pink-600/10 border border-pink-500/15 text-pink-400 hover:bg-pink-600/15 transition-colors"
                       aria-label="Instagram"
                     >
                       <Instagram className="h-5 w-5" />
@@ -320,7 +319,7 @@ export function ContactSection({ settings }: ContactSectionProps) {
 
             {/* Google Maps */}
             {settings.googleMapsUrl && (
-              <div className="rounded-2xl overflow-hidden border border-slate-800">
+              <div className="rounded-2xl overflow-hidden border border-slate-800/60">
                 <iframe
                   src={
                     settings.googleMapsUrl.startsWith("http")
@@ -340,10 +339,10 @@ export function ContactSection({ settings }: ContactSectionProps) {
 
             {/* Emergency banner */}
             {settings.phone && (
-              <div className="rounded-2xl bg-gradient-to-r from-red-600/20 to-amber-600/20 border border-red-500/20 p-6">
+              <div className="rounded-2xl bg-gradient-to-r from-red-600/15 to-amber-600/15 border border-red-500/15 p-6">
                 <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-red-600/20">
-                    <Phone className="h-6 w-6 text-red-400" />
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-600/15">
+                    <Phone className="h-5 w-5 text-red-400" />
                   </div>
                   <div>
                     <h4 className="font-bold text-white">

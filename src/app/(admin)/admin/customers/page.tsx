@@ -9,9 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { DashboardShell } from "@/components/admin/dashboard-shell";
 import { EmptyState } from "@/components/shared/empty-state";
+import { StatusBadge } from "@/components/shared/status-badge";
 import { getCustomers } from "./actions";
 import { CustomerFilters } from "./customer-filters";
 import { CustomerPagination } from "./customer-pagination";
@@ -23,14 +23,6 @@ interface CustomersPageProps {
     page?: string;
   }>;
 }
-
-const customerTypeLabels: Record<string, string> = {
-  RESIDENTIAL: "Residential",
-  COMMERCIAL: "Commercial",
-  INDUSTRIAL: "Industrial",
-  RESTAURANT: "Restaurant",
-  OTHER: "Other",
-};
 
 export default async function CustomersPage({ searchParams }: CustomersPageProps) {
   const params = await searchParams;
@@ -80,10 +72,10 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
         />
       ) : (
         <>
-          <div className="rounded-lg border bg-white">
+          <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="hover:bg-transparent">
                   <TableHead>Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Company</TableHead>
                   <TableHead className="hidden sm:table-cell">Email</TableHead>
@@ -99,26 +91,24 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                     <TableCell>
                       <Link
                         href={`/admin/customers/${customer.id}`}
-                        className="font-medium hover:underline"
+                        className="font-medium text-card-foreground hover:text-primary transition-colors"
                       >
                         {customer.name}
                       </Link>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {customer.companyName || "—"}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {customer.email || "—"}
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {customer.phone || "—"}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary">
-                        {customerTypeLabels[customer.type] || customer.type}
-                      </Badge>
+                      <StatusBadge status={customer.type} />
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {customer._count.projects}
                     </TableCell>
                     <TableCell className="text-right">

@@ -15,12 +15,14 @@ export default async function SettingsPage() {
         <SettingsForm settings={settings} onSubmit={updateCompanySettings} />
       </div>
 
-      <div className="mt-8 max-w-2xl rounded-lg border bg-white p-6">
-        <h2 className="text-lg font-semibold mb-2 flex items-center gap-2">
-          <Building2 className="h-5 w-5 text-muted-foreground" />
+      <div className="mt-8 max-w-2xl rounded-xl border border-border/60 bg-card p-6">
+        <h2 className="text-base font-semibold text-card-foreground mb-2 flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
+            <Building2 className="h-4 w-4 text-muted-foreground" />
+          </div>
           About this section
         </h2>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-muted-foreground leading-relaxed">
           These details are displayed on the public website (contact section,
           footer, and navigation). Changes take effect immediately after saving.
         </p>

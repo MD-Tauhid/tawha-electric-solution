@@ -43,17 +43,21 @@ export function ConfirmDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <div className="flex items-center gap-2">
+          <div className="flex items-start gap-3">
             {variant === "destructive" && (
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-destructive/10">
-                <AlertTriangle className="h-4 w-4 text-destructive" />
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-destructive/10">
+                <AlertTriangle className="h-5 w-5 text-destructive" />
               </div>
             )}
-            <DialogTitle>{title}</DialogTitle>
+            <div>
+              <DialogTitle>{title}</DialogTitle>
+              <DialogDescription className="mt-1.5">
+                {description}
+              </DialogDescription>
+            </div>
           </div>
-          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button

@@ -47,11 +47,11 @@ export function MobileSidebar() {
         <div className="fixed inset-0 z-50 lg:hidden">
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/80"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setOpen(false)}
           />
           {/* Sidebar */}
-          <div className="fixed inset-y-0 left-0 z-50 w-72">
+          <div className="fixed inset-y-0 left-0 z-50 w-72 animate-in slide-in-from-left duration-200">
             <Sidebar onNavigate={() => setOpen(false)} />
           </div>
         </div>

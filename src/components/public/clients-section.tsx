@@ -64,7 +64,7 @@ export function ClientsSection() {
             Trusted Across{" "}
             <span className="gradient-text">Every Sector</span>
           </h2>
-          <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-slate-400/80 max-w-2xl mx-auto">
             From homes to factories, we deliver tailored electrical solutions
             that meet the unique demands of every environment.
           </p>
@@ -78,21 +78,21 @@ export function ClientsSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`group relative rounded-2xl bg-gradient-to-b from-slate-800/50 to-slate-900/50 border border-slate-700/50 p-8 hover:border-blue-500/30 transition-all duration-300 ${
+              className={`group relative rounded-2xl bg-gradient-to-b from-slate-800/40 to-slate-900/40 border border-slate-700/40 p-8 hover:border-blue-500/30 transition-all duration-300 ${
                 i === SECTORS.length - 1 && SECTORS.length % 3 === 1
                   ? "sm:col-span-2 lg:col-span-1 lg:col-start-2"
                   : ""
               }`}
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/20 group-hover:bg-blue-600/20 transition-colors mb-6">
-                <sector.icon className="h-7 w-7 text-blue-400" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600/10 border border-blue-500/15 group-hover:bg-blue-600/15 transition-colors mb-5">
+                <sector.icon className="h-6 w-6 text-blue-400" />
               </div>
 
-              <h3 className="text-xl font-bold text-white mb-3">
+              <h3 className="text-lg font-bold text-white mb-2">
                 {sector.title}
               </h3>
 
-              <p className="text-sm text-slate-400 leading-relaxed mb-6">
+              <p className="text-sm text-slate-400/80 leading-relaxed mb-6">
                 {sector.description}
               </p>
 
@@ -100,9 +100,9 @@ export function ClientsSection() {
                 {sector.features.map((feature) => (
                   <li
                     key={feature}
-                    className="flex items-center gap-2 text-sm text-slate-300"
+                    className="flex items-center gap-2 text-sm text-slate-300/80"
                   >
-                    <div className="h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400" />
+                    <div className="h-1 w-1 shrink-0 rounded-full bg-blue-400" />
                     {feature}
                   </li>
                 ))}

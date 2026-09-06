@@ -10,7 +10,7 @@ export default async function AdminLayout({
   const session = await requireAuth();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Desktop Sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72">
         <Sidebar />

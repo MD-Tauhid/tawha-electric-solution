@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { User, MapPin, StickyNote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -72,146 +73,164 @@ export function CustomerForm({ customer, onSubmit }: CustomerFormProps) {
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
-      <div className="grid gap-4 sm:grid-cols-2">
-        {/* Name */}
-        <div className="space-y-2">
-          <Label htmlFor="name">
-            Name <span className="text-destructive">*</span>
-          </Label>
-          <Input
-            id="name"
-            placeholder="John Doe"
-            {...register("name")}
-            aria-invalid={!!errors.name}
-          />
-          {errors.name && (
-            <p className="text-sm text-destructive">{errors.name.message}</p>
-          )}
+      {/* Personal Information */}
+      <div className="rounded-xl border border-border/60 bg-card p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <User className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-base font-semibold text-card-foreground">Personal Information</h2>
         </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {/* Name */}
+          <div className="space-y-2">
+            <Label htmlFor="name">
+              Name <span className="text-destructive">*</span>
+            </Label>
+            <Input
+              id="name"
+              placeholder="John Doe"
+              {...register("name")}
+              aria-invalid={!!errors.name}
+            />
+            {errors.name && (
+              <p className="text-sm text-destructive">{errors.name.message}</p>
+            )}
+          </div>
 
-        {/* Company Name */}
-        <div className="space-y-2">
-          <Label htmlFor="companyName">Company Name</Label>
-          <Input
-            id="companyName"
-            placeholder="Acme Corp"
-            {...register("companyName")}
-            aria-invalid={!!errors.companyName}
-          />
-          {errors.companyName && (
-            <p className="text-sm text-destructive">
-              {errors.companyName.message}
-            </p>
-          )}
-        </div>
+          {/* Company Name */}
+          <div className="space-y-2">
+            <Label htmlFor="companyName">Company Name</Label>
+            <Input
+              id="companyName"
+              placeholder="Acme Corp"
+              {...register("companyName")}
+              aria-invalid={!!errors.companyName}
+            />
+            {errors.companyName && (
+              <p className="text-sm text-destructive">
+                {errors.companyName.message}
+              </p>
+            )}
+          </div>
 
-        {/* Email */}
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="john@example.com"
-            {...register("email")}
-            aria-invalid={!!errors.email}
-          />
-          {errors.email && (
-            <p className="text-sm text-destructive">{errors.email.message}</p>
-          )}
-        </div>
+          {/* Email */}
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="john@example.com"
+              {...register("email")}
+              aria-invalid={!!errors.email}
+            />
+            {errors.email && (
+              <p className="text-sm text-destructive">{errors.email.message}</p>
+            )}
+          </div>
 
-        {/* Phone */}
-        <div className="space-y-2">
-          <Label htmlFor="phone">Phone</Label>
-          <Input
-            id="phone"
-            placeholder="+1 (555) 123-4567"
-            {...register("phone")}
-            aria-invalid={!!errors.phone}
-          />
-          {errors.phone && (
-            <p className="text-sm text-destructive">{errors.phone.message}</p>
-          )}
-        </div>
+          {/* Phone */}
+          <div className="space-y-2">
+            <Label htmlFor="phone">Phone</Label>
+            <Input
+              id="phone"
+              placeholder="+1 (555) 123-4567"
+              {...register("phone")}
+              aria-invalid={!!errors.phone}
+            />
+            {errors.phone && (
+              <p className="text-sm text-destructive">{errors.phone.message}</p>
+            )}
+          </div>
 
-        {/* Type */}
-        <div className="space-y-2">
-          <Label htmlFor="type">
-            Customer Type <span className="text-destructive">*</span>
-          </Label>
-          <Select
-            id="type"
-            options={customerTypeOptions}
-            {...register("type")}
-            aria-invalid={!!errors.type}
-          />
-          {errors.type && (
-            <p className="text-sm text-destructive">{errors.type.message}</p>
-          )}
-        </div>
+          {/* Type */}
+          <div className="space-y-2">
+            <Label htmlFor="type">
+              Customer Type <span className="text-destructive">*</span>
+            </Label>
+            <Select
+              id="type"
+              options={customerTypeOptions}
+              {...register("type")}
+              aria-invalid={!!errors.type}
+            />
+            {errors.type && (
+              <p className="text-sm text-destructive">{errors.type.message}</p>
+            )}
+          </div>
 
-        {/* Zip Code */}
-        <div className="space-y-2">
-          <Label htmlFor="zipCode">Zip Code</Label>
-          <Input
-            id="zipCode"
-            placeholder="12345"
-            {...register("zipCode")}
-            aria-invalid={!!errors.zipCode}
-          />
-          {errors.zipCode && (
-            <p className="text-sm text-destructive">{errors.zipCode.message}</p>
-          )}
+          {/* Zip Code */}
+          <div className="space-y-2">
+            <Label htmlFor="zipCode">Zip Code</Label>
+            <Input
+              id="zipCode"
+              placeholder="12345"
+              {...register("zipCode")}
+              aria-invalid={!!errors.zipCode}
+            />
+            {errors.zipCode && (
+              <p className="text-sm text-destructive">{errors.zipCode.message}</p>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Address */}
-      <div className="space-y-2">
-        <Label htmlFor="address">Address</Label>
-        <Input
-          id="address"
-          placeholder="123 Main Street"
-          {...register("address")}
-          aria-invalid={!!errors.address}
-        />
-        {errors.address && (
-          <p className="text-sm text-destructive">{errors.address.message}</p>
-        )}
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2">
-        {/* City */}
-        <div className="space-y-2">
-          <Label htmlFor="city">City</Label>
-          <Input
-            id="city"
-            placeholder="New York"
-            {...register("city")}
-            aria-invalid={!!errors.city}
-          />
-          {errors.city && (
-            <p className="text-sm text-destructive">{errors.city.message}</p>
-          )}
+      <div className="rounded-xl border border-border/60 bg-card p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <MapPin className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-base font-semibold text-card-foreground">Address</h2>
         </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="address">Address</Label>
+            <Input
+              id="address"
+              placeholder="123 Main Street"
+              {...register("address")}
+              aria-invalid={!!errors.address}
+            />
+            {errors.address && (
+              <p className="text-sm text-destructive">{errors.address.message}</p>
+            )}
+          </div>
 
-        {/* State */}
-        <div className="space-y-2">
-          <Label htmlFor="state">State</Label>
-          <Input
-            id="state"
-            placeholder="NY"
-            {...register("state")}
-            aria-invalid={!!errors.state}
-          />
-          {errors.state && (
-            <p className="text-sm text-destructive">{errors.state.message}</p>
-          )}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {/* City */}
+            <div className="space-y-2">
+              <Label htmlFor="city">City</Label>
+              <Input
+                id="city"
+                placeholder="New York"
+                {...register("city")}
+                aria-invalid={!!errors.city}
+              />
+              {errors.city && (
+                <p className="text-sm text-destructive">{errors.city.message}</p>
+              )}
+            </div>
+
+            {/* State */}
+            <div className="space-y-2">
+              <Label htmlFor="state">State</Label>
+              <Input
+                id="state"
+                placeholder="NY"
+                {...register("state")}
+                aria-invalid={!!errors.state}
+              />
+              {errors.state && (
+                <p className="text-sm text-destructive">{errors.state.message}</p>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Notes */}
-      <div className="space-y-2">
-        <Label htmlFor="notes">Notes</Label>
+      <div className="rounded-xl border border-border/60 bg-card p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <StickyNote className="h-4 w-4 text-muted-foreground" />
+          <h2 className="text-base font-semibold text-card-foreground">Notes</h2>
+        </div>
         <Textarea
           id="notes"
           placeholder="Additional notes about this customer..."
@@ -220,12 +239,12 @@ export function CustomerForm({ customer, onSubmit }: CustomerFormProps) {
           aria-invalid={!!errors.notes}
         />
         {errors.notes && (
-          <p className="text-sm text-destructive">{errors.notes.message}</p>
+          <p className="text-sm text-destructive mt-2">{errors.notes.message}</p>
         )}
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
           {customer ? "Update Customer" : "Create Customer"}

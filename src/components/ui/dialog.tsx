@@ -111,7 +111,7 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
       <div className="fixed inset-0 z-50">
         {/* Backdrop */}
         <div
-          className="fixed inset-0 bg-black/80"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm"
           onClick={() => onOpenChange(false)}
         />
         {/* Content */}
@@ -119,14 +119,14 @@ const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
           <div
             ref={ref}
             className={cn(
-              "relative z-50 w-full max-w-lg rounded-lg border bg-background p-6 shadow-lg",
+              "relative z-50 w-full max-w-lg rounded-xl border bg-card p-6 shadow-lg",
               className
             )}
             {...props}
           >
             {children}
             <button
-              className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
+              className="absolute right-4 top-4 rounded-md opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
               onClick={() => onOpenChange(false)}
             >
               <svg
@@ -175,7 +175,7 @@ function DialogFooter({
   return (
     <div
       className={cn(
-        "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2",
+        "flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-6",
         className
       )}
       {...props}

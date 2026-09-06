@@ -9,9 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { DashboardShell } from "@/components/admin/dashboard-shell";
 import { EmptyState } from "@/components/shared/empty-state";
+import { StatusBadge } from "@/components/shared/status-badge";
 import { getPayments } from "./actions";
 import { PaymentFilters } from "./payment-filters";
 import { PaymentPagination } from "./payment-pagination";
@@ -25,14 +25,6 @@ interface PaymentsPageProps {
     page?: string;
   }>;
 }
-
-const paymentMethodLabels: Record<string, string> = {
-  CASH: "Cash",
-  BANK_TRANSFER: "Bank Transfer",
-  MOBILE_BANKING: "Mobile Banking",
-  CHEQUE: "Cheque",
-  OTHER: "Other",
-};
 
 export default async function PaymentsPage({ searchParams }: PaymentsPageProps) {
   const params = await searchParams;
@@ -90,10 +82,10 @@ export default async function PaymentsPage({ searchParams }: PaymentsPageProps) 
         />
       ) : (
         <>
-          <div className="rounded-lg border bg-white">
+          <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="hover:bg-transparent">
                   <TableHead>Date</TableHead>
                   <TableHead>Bill</TableHead>
                   <TableHead className="hidden sm:table-cell">
@@ -113,13 +105,13 @@ export default async function PaymentsPage({ searchParams }: PaymentsPageProps) 
               <TableBody>
                 {result.payments.map((payment) => (
                   <TableRow key={payment.id}>
-                    <TableCell>
+                    <TableCell className="text-card-foreground">
                       {new Date(payment.paymentDate).toLocaleDateString()}
                     </TableCell>
                     <TableCell>
                       <Link
                         href={`/admin/bills/${payment.bill.id}`}
-                        className="font-mono text-sm hover:underline"
+                        className="font-mono text-sm text-card-foreground hover:text-primary transition-colors"
                       >
                         {payment.bill.billNumber}
                       </Link>
@@ -127,24 +119,22 @@ export default async function PaymentsPage({ searchParams }: PaymentsPageProps) 
                     <TableCell className="hidden sm:table-cell">
                       <Link
                         href={`/admin/projects/${payment.bill.project.id}`}
-                        className="font-medium hover:underline"
+                        className="font-medium text-card-foreground hover:text-primary transition-colors"
                       >
                         {payment.bill.project.projectNumber}
                       </Link>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {payment.bill.project.customer.companyName ||
                         payment.bill.project.customer.name}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">
-                        {paymentMethodLabels[payment.method] || payment.method}
-                      </Badge>
+                      <StatusBadge status={payment.method} />
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">
+                    <TableCell className="hidden sm:table-cell text-muted-foreground">
                       {payment.reference || "—"}
                     </TableCell>
-                    <TableCell className="text-right font-medium">
+                    <TableCell className="text-right font-medium text-card-foreground">
                       ${Number(payment.amount).toLocaleString()}
                     </TableCell>
                     <TableCell className="text-right">

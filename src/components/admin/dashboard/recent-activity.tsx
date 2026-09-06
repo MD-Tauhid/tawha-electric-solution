@@ -19,10 +19,10 @@ const ENTITY_ICONS: Record<string, typeof FolderKanban> = {
 };
 
 const ENTITY_COLORS: Record<string, string> = {
-  PROJECT: "bg-blue-100 text-blue-700",
-  BILL: "bg-amber-100 text-amber-700",
-  PAYMENT: "bg-green-100 text-green-700",
-  CUSTOMER: "bg-purple-100 text-purple-700",
+  PROJECT: "bg-blue-50 text-blue-600",
+  BILL: "bg-amber-50 text-amber-600",
+  PAYMENT: "bg-emerald-50 text-emerald-600",
+  CUSTOMER: "bg-violet-50 text-violet-600",
 };
 
 const ENTITY_LINKS: Record<string, (entityId: string) => string> = {
@@ -112,30 +112,32 @@ function getActivityDescription(activity: RecentActivity): string {
 
 export function RecentActivitySection({ activities }: RecentActivityProps) {
   return (
-    <div className="rounded-lg border bg-white p-6 shadow-sm">
-      <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
+    <div className="rounded-xl border border-border/60 bg-card p-6">
+      <h2 className="text-base font-semibold text-card-foreground mb-4">Recent Activity</h2>
       {activities.length === 0 ? (
-        <p className="text-sm text-muted-foreground py-8 text-center">
-          No recent activity.
-        </p>
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <p className="text-sm text-muted-foreground">
+            No recent activity.
+          </p>
+        </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-1">
           {activities.map((activity) => {
             const Icon = ENTITY_ICONS[activity.entity] || FolderKanban;
             const colorClass =
-              ENTITY_COLORS[activity.entity] || "bg-gray-100 text-gray-700";
+              ENTITY_COLORS[activity.entity] || "bg-slate-50 text-slate-600";
             const linkFn = ENTITY_LINKS[activity.entity];
             const description = getActivityDescription(activity);
 
             const content = (
-              <div className="flex items-start gap-3">
+              <div className="flex items-start gap-3 px-2 py-2.5 rounded-lg">
                 <div
-                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${colorClass}`}
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${colorClass}`}
                 >
                   <Icon className="h-4 w-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-sm">{description}</p>
+                  <p className="text-sm text-card-foreground">{description}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">
                     {formatTimeAgo(activity.createdAt)}
                   </p>
@@ -148,7 +150,7 @@ export function RecentActivitySection({ activities }: RecentActivityProps) {
                 <Link
                   key={activity.id}
                   href={linkFn(activity.entityId)}
-                  className="block hover:bg-muted/50 rounded-lg p-2 -mx-2 transition-colors"
+                  className="block hover:bg-accent/50 transition-colors"
                 >
                   {content}
                 </Link>
@@ -156,7 +158,7 @@ export function RecentActivitySection({ activities }: RecentActivityProps) {
             }
 
             return (
-              <div key={activity.id} className="p-2 -mx-2">
+              <div key={activity.id}>
                 {content}
               </div>
             );
