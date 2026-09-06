@@ -322,7 +322,11 @@ export function ContactSection({ settings }: ContactSectionProps) {
             {settings.googleMapsUrl && (
               <div className="rounded-2xl overflow-hidden border border-slate-800">
                 <iframe
-                  src={`https://www.google.com/maps/embed?pb=${encodeURIComponent(settings.googleMapsUrl)}`}
+                  src={
+                    settings.googleMapsUrl.startsWith("http")
+                      ? settings.googleMapsUrl
+                      : `https://www.google.com/maps/embed?pb=${encodeURIComponent(settings.googleMapsUrl)}`
+                  }
                   width="100%"
                   height="250"
                   style={{ border: 0 }}

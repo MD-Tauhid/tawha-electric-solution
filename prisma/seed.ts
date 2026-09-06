@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-async function main() {
+async function seedAdminUser() {
   const email = "admin@tawhaelectrical.com";
   const password = "admin123"; // Change this in production
   const name = "Admin";
@@ -13,7 +13,7 @@ async function main() {
   });
 
   if (existingUser) {
-    console.log(`User with email ${email} already exists. Skipping seed.`);
+    console.log(`User with email ${email} already exists. Skipping user seed.`);
     return;
   }
 
@@ -29,6 +29,36 @@ async function main() {
   });
 
   console.log(`Created admin user: ${user.email} (id: ${user.id})`);
+}
+
+async function seedCompanySettings() {
+  const existingSettings = await prisma.companySettings.findFirst();
+
+  if (existingSettings) {
+    console.log("Company settings already exist. Skipping settings seed.");
+    return;
+  }
+
+  const settings = await prisma.companySettings.create({
+    data: {
+      companyName: "Tawha Electrical Solution",
+      phone: "+880 1XXX-XXXXXX",
+      email: "info@tawhaelectrical.com",
+      address: "Dhaka, Bangladesh",
+      whatsapp: "",
+      facebook: "",
+      instagram: "",
+      googleMapsUrl: "",
+      businessHours: "Sat–Thu: 9:00 AM – 6:00 PM",
+    },
+  });
+
+  console.log(`Created company settings (id: ${settings.id})`);
+}
+
+async function main() {
+  await seedAdminUser();
+  await seedCompanySettings();
 }
 
 main()

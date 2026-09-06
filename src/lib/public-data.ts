@@ -1,21 +1,11 @@
 import { prisma } from "@/lib/prisma";
+import {
+  DEFAULT_COMPANY_SETTINGS,
+  toCompanySettingsData,
+  type CompanySettingsData,
+} from "@/lib/company-settings";
 
-/**
- * Default company settings used when no CompanySettings record exists.
- */
-const DEFAULT_COMPANY_SETTINGS = {
-  companyName: "Tawha Electrical Solution",
-  phone: "+880 1XXX-XXXXXX",
-  email: "info@tawhaelectrical.com",
-  address: "Dhaka, Bangladesh",
-  whatsapp: "",
-  facebook: "",
-  instagram: "",
-  googleMapsUrl: "",
-  businessHours: "Sat–Thu: 9:00 AM – 6:00 PM",
-};
-
-export type PublicCompanySettings = typeof DEFAULT_COMPANY_SETTINGS;
+export type PublicCompanySettings = CompanySettingsData;
 
 /**
  * Get company settings for the public site.
@@ -25,18 +15,7 @@ export async function getPublicCompanySettings(): Promise<PublicCompanySettings>
   try {
     const settings = await prisma.companySettings.findFirst();
     if (!settings) return DEFAULT_COMPANY_SETTINGS;
-
-    return {
-      companyName: settings.companyName || DEFAULT_COMPANY_SETTINGS.companyName,
-      phone: settings.phone || DEFAULT_COMPANY_SETTINGS.phone,
-      email: settings.email || DEFAULT_COMPANY_SETTINGS.email,
-      address: settings.address || DEFAULT_COMPANY_SETTINGS.address,
-      whatsapp: settings.whatsapp || "",
-      facebook: settings.facebook || "",
-      instagram: settings.instagram || "",
-      googleMapsUrl: settings.googleMapsUrl || "",
-      businessHours: settings.businessHours || DEFAULT_COMPANY_SETTINGS.businessHours,
-    };
+    return toCompanySettingsData(settings);
   } catch {
     return DEFAULT_COMPANY_SETTINGS;
   }
