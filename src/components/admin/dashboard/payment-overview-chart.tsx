@@ -1,25 +1,19 @@
 "use client";
 
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Cell,
 } from "recharts";
 import type { PaymentOverview } from "@/lib/dashboard";
 
 interface PaymentOverviewChartProps {
   data: PaymentOverview[];
 }
-
-const CATEGORY_COLORS: Record<string, string> = {
-  collected: "#059669",
-  outstanding: "#dc2626",
-};
 
 export function PaymentOverviewChart({ data }: PaymentOverviewChartProps) {
   const hasData = data.some((d) => d.amount > 0);
@@ -28,39 +22,34 @@ export function PaymentOverviewChart({ data }: PaymentOverviewChartProps) {
     <div className="rounded-xl border border-border/60 bg-card p-6">
       <h2 className="text-base font-semibold text-card-foreground mb-4">Payment Overview</h2>
       {!hasData ? (
-        <div className="flex h-[280px] items-center justify-center text-sm text-muted-foreground">
+        <div className="flex h-70 items-center justify-center text-sm text-muted-foreground">
           No billing data available yet.
         </div>
       ) : (
-        <div className="h-[280px]">
+        <div className="h-70">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart
+            <LineChart
               data={data}
-              layout="vertical"
               margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
               <XAxis
-                type="number"
+                dataKey="label"
+                tick={{ fontSize: 13, fontWeight: 500, fill: "#334155" }}
+                tickLine={false}
+                axisLine={false}
+              />
+              <YAxis
                 tickFormatter={(value) => {
                   const num = Number(value);
-                  if (num >= 1000000)
-                    return `$${(num / 1000000).toFixed(1)}M`;
-                  if (num >= 1000)
-                    return `$${(num / 1000).toFixed(0)}K`;
+                  if (num >= 1000000) return `$${(num / 1000000).toFixed(1)}M`;
+                  if (num >= 1000) return `$${(num / 1000).toFixed(0)}K`;
                   return `$${num.toLocaleString()}`;
                 }}
                 tick={{ fontSize: 12, fill: "#64748b" }}
                 tickLine={false}
                 axisLine={false}
-              />
-              <YAxis
-                type="category"
-                dataKey="label"
-                tick={{ fontSize: 13, fontWeight: 500, fill: "#334155" }}
-                tickLine={false}
-                axisLine={false}
-                width={100}
+                width={60}
               />
               <Tooltip
                 formatter={(value) => [
@@ -74,15 +63,16 @@ export function PaymentOverviewChart({ data }: PaymentOverviewChartProps) {
                   fontSize: "13px",
                 }}
               />
-              <Bar dataKey="amount" radius={[0, 4, 4, 0]} name="Amount">
-                {data.map((entry) => (
-                  <Cell
-                    key={entry.category}
-                    fill={CATEGORY_COLORS[entry.category] || "#94a3b8"}
-                  />
-                ))}
-              </Bar>
-            </BarChart>
+              <Line
+                type="monotone"
+                dataKey="amount"
+                name="Amount"
+                stroke="#4f46e5"
+                strokeWidth={3}
+                dot={{ r: 5, fill: "#4f46e5", strokeWidth: 2, stroke: "#ffffff" }}
+                activeDot={{ r: 7 }}
+              />
+            </LineChart>
           </ResponsiveContainer>
         </div>
       )}

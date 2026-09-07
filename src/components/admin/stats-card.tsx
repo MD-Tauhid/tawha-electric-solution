@@ -19,7 +19,7 @@ export function StatsCard({
   return (
     <div
       className={cn(
-        "rounded-xl border border-border/60 bg-card p-5 transition-colors hover:border-border",
+        "admin-panel rounded-2xl border p-5 transition-colors hover:border-white",
         className
       )}
       {...props}

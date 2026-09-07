@@ -27,7 +27,7 @@ interface FinancialCardProps {
 
 function FinancialCard({ title, value, description, icon, iconColor = "text-muted-foreground" }: FinancialCardProps) {
   return (
-    <div className="rounded-xl border border-border/60 bg-card p-5">
+    <div className="admin-panel rounded-2xl border p-5">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0 space-y-1.5">
           <p className="text-sm font-medium text-muted-foreground truncate">{title}</p>

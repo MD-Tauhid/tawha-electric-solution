@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Menu, Phone, X, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 
 interface NavbarProps {
   companyName: string;
@@ -70,6 +71,7 @@ export function Navbar({ companyName, phone }: NavbarProps) {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle className="text-slate-300 hover:bg-white/10 hover:text-white" />
             <a
               href={`tel:${phone}`}
               className="flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors"
@@ -116,6 +118,10 @@ export function Navbar({ companyName, phone }: NavbarProps) {
               </a>
             ))}
             <div className="pt-3 border-t border-slate-700/50 space-y-2">
+              <div className="flex items-center justify-between px-4 py-2 text-slate-300">
+                <span className="text-sm">Appearance</span>
+                <ThemeToggle className="text-slate-300 hover:bg-white/10 hover:text-white" />
+              </div>
               <a
                 href={`tel:${phone}`}
                 className="flex items-center gap-2 px-4 py-3 text-slate-300 hover:text-white"

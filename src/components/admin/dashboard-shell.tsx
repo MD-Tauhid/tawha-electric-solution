@@ -8,15 +8,12 @@ interface DashboardShellProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export function DashboardShell({
-  title,
-  description,
-  actions,
   children,
   className,
   ...props
 }: DashboardShellProps) {
   return (
-    <div className={cn("flex-1 space-y-2 sm:space-y-3 lg:space-y-5 p-2 sm:p-3 lg:p-5", className)} {...props}>
+    <div className={cn("flex-1 space-y-4 sm:space-y-5 lg:space-y-6 px-5 pb-8 sm:px-8 lg:px-10", className)} {...props}>
       {/* {(title || actions) && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
