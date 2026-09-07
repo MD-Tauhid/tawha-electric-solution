@@ -17,7 +17,7 @@ export default async function AdminLayout({
       </div>
 
       {/* Main Content Area */}
-      <div className="grow flex flex-col">
+      <div className="grow flex flex-col relative">
         <AdminHeader
           user={{
             name: session.user.name,

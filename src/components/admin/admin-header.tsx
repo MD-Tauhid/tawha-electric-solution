@@ -37,7 +37,7 @@ export function AdminHeader({ breadcrumbs = [], user }: AdminHeaderProps) {
   const pageTitle = breadcrumbs.at(-1)?.label || getPageTitle(pathname);
 
   return (
-    <header className="flex min-h-20 items-center gap-4 px-5 py-4 sm:px-8 lg:px-10">
+    <header className="flex sticky top-0 left-0 right-0 items-center gap-3 px-3 py-3 sm:px-8 lg:px-10 backdrop-blur-xl z-40">
       <MobileSidebar />
       <Separator orientation="vertical" className="h-5 lg:hidden" />
       <div className="min-w-0">
