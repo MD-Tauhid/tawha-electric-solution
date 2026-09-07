@@ -19,18 +19,19 @@ export function StatsCard({
   return (
     <div
       className={cn(
-        "admin-panel rounded-2xl border p-5 transition-colors hover:border-white",
-        className
+        "admin-panel rounded-2xl border p-4 transition-colors hover:border-white",
+        className,
       )}
       {...props}
     >
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0 space-y-1.5">
-          <p className="text-sm font-medium text-muted-foreground truncate">{title}</p>
-          <p className="text-2xl font-bold tracking-tight text-card-foreground">{value}</p>
-          {description && (
-            <p className="text-xs text-muted-foreground">{description}</p>
-          )}
+      <div className="flex items-start justify-between">
+        <div className="min-w-0">
+          <p className="text-sm font-medium text-muted-foreground truncate">
+            {title}
+          </p>
+          <p className="text-2xl font-bold tracking-tight text-card-foreground">
+            {value}
+          </p>
         </div>
         {icon && (
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/5 text-primary">
@@ -38,6 +39,9 @@ export function StatsCard({
           </div>
         )}
       </div>
+      {description && (
+        <p className="text-xs text-muted-foreground">{description}</p>
+      )}
     </div>
   );
 }
