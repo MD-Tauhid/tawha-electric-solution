@@ -200,6 +200,68 @@ html {
   color: var(--admin-muted);
 }
 
+.admin-workspace .table-glass-wrapper {
+  border: 1px solid var(--admin-line);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 30px rgba(91, 111, 170, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.admin-workspace .table-glass {
+  background: transparent;
+}
+
+.admin-workspace .table-glass tbody tr {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(10px);
+}
+
+.admin-workspace .table-glass tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.admin-workspace .table-glass tbody tr:hover {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.admin-workspace .table-glass-header {
+  background: rgba(37, 99, 235, 0.14);
+}
+
+.admin-workspace .table-glass-header th {
+  color: #1d4ed8;
+  border-color: rgba(37, 99, 235, 0.18);
+}
+
+.dark .admin-workspace .table-glass-wrapper {
+  background: rgba(34, 31, 20, 0.58);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.dark .admin-workspace .table-glass tbody tr {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(250, 204, 21, 0.14);
+}
+
+.dark .admin-workspace .table-glass tbody tr:nth-child(even) {
+  background: rgba(250, 204, 21, 0.075);
+}
+
+.dark .admin-workspace .table-glass tbody tr:hover {
+  background: rgba(250, 204, 21, 0.12);
+}
+
+.dark .admin-workspace .table-glass-header {
+  background: rgba(250, 204, 21, 0.16);
+}
+
+.dark .admin-workspace .table-glass-header th {
+  color: #fde047;
+  border-color: rgba(250, 204, 21, 0.22);
+}
+
 .dark .admin-workspace {
   --admin-ink: #fff7c2;
   --admin-muted: #b8ae8b;

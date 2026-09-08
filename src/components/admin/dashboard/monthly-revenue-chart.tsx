@@ -72,7 +72,7 @@ export function MonthlyRevenueChart({ data }: MonthlyRevenueChartProps) {
               <Bar
                 dataKey="revenue"
                 fill="#1e40af"
-                radius={[4, 4, 0, 0]}
+                radius={[20, 20, 0, 0]}
                 name="Revenue"
               />
             </BarChart>
