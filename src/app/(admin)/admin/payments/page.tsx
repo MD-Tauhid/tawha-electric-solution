@@ -139,7 +139,7 @@ export default async function PaymentsPage({ searchParams }: PaymentsPageProps) 
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/payments/${payment.id}`}>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="default" size="sm">
                           View
                         </Button>
                       </Link>

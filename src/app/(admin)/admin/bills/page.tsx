@@ -130,7 +130,7 @@ export default async function BillsPage({ searchParams }: BillsPageProps) {
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/bills/${bill.id}`}>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="default" size="sm">
                           View
                         </Button>
                       </Link>

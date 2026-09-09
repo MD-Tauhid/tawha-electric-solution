@@ -122,7 +122,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/services/${service.id}`}>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="default" size="sm">
                           View
                         </Button>
                       </Link>

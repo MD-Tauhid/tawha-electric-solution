@@ -117,7 +117,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/projects/${project.id}`}>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="default" size="sm">
                           View
                         </Button>
                       </Link>
