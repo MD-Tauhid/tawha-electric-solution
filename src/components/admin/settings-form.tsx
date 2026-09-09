@@ -211,11 +211,11 @@ export function SettingsForm({ settings, onSubmit }: SettingsFormProps) {
             </div>
 
             {/* Google Maps URL */}
-            <div className="space-y-2">
-              <Label htmlFor="googleMapsUrl">Google Maps URL</Label>
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="googleMapsUrl">Google Maps Embed URL</Label>
               <Input
                 id="googleMapsUrl"
-                placeholder="https://maps.app.goo.gl/..."
+                placeholder="https://www.google.com/maps/embed?pb=!1m18!..."
                 {...register("googleMapsUrl")}
                 aria-invalid={!!errors.googleMapsUrl}
               />
@@ -224,6 +224,9 @@ export function SettingsForm({ settings, onSubmit }: SettingsFormProps) {
                   {errors.googleMapsUrl.message}
                 </p>
               )}
+              <p className="text-xs text-muted-foreground">
+                Use an embed URL, not a share link. To get one: open Google Maps → search your location → click &quot;Share&quot; → &quot;Embed a map&quot; → copy the URL from the iframe src.
+              </p>
             </div>
           </div>
         </div>

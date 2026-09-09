@@ -12,6 +12,7 @@ import {
   Instagram,
   Send,
   CheckCircle,
+  ExternalLink,
 } from "lucide-react";
 import type { PublicCompanySettings } from "@/lib/public-data";
 
@@ -23,6 +24,15 @@ export function ContactSection({ settings }: ContactSectionProps) {
   const [formStatus, setFormStatus] = React.useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
+  const [mapFailed, setMapFailed] = React.useState(false);
+
+  // Check if a Google Maps URL is a valid embed URL
+  const isEmbedUrl = React.useMemo(() => {
+    const url = settings.googleMapsUrl;
+    if (!url) return false;
+    // Valid embed URLs contain /maps/embed
+    return url.includes("/maps/embed") || url.includes("maps/embed/v1");
+  }, [settings.googleMapsUrl]);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -320,20 +330,41 @@ export function ContactSection({ settings }: ContactSectionProps) {
             {/* Google Maps */}
             {settings.googleMapsUrl && (
               <div className="rounded-2xl overflow-hidden border border-slate-800/60">
-                <iframe
-                  src={
-                    settings.googleMapsUrl.startsWith("http")
-                      ? settings.googleMapsUrl
-                      : `https://www.google.com/maps/embed?pb=${encodeURIComponent(settings.googleMapsUrl)}`
-                  }
-                  width="100%"
-                  height="250"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Office Location"
-                />
+                {isEmbedUrl && !mapFailed ? (
+                  <iframe
+                    src={settings.googleMapsUrl}
+                    width="100%"
+                    height="250"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="origin"
+                    title="Office Location"
+                    onError={() => setMapFailed(true)}
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center gap-3 bg-slate-800/40 p-8 text-center" style={{ minHeight: 250 }}>
+                    <MapPin className="h-10 w-10 text-blue-400" />
+                    <p className="text-sm text-slate-400">
+                      {settings.address || "View our location on Google Maps"}
+                    </p>
+                    <a
+                      href={
+                        isEmbedUrl
+                          ? settings.googleMapsUrl
+                          : settings.googleMapsUrl.startsWith("http")
+                            ? settings.googleMapsUrl
+                            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(settings.googleMapsUrl)}`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-500 transition-colors"
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                      Open in Google Maps
+                    </a>
+                  </div>
+                )}
               </div>
             )}
 
