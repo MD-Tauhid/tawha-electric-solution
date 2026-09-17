@@ -1,7 +1,6 @@
 import { requireAuth } from "@/lib/auth-utils";
 import { Sidebar } from "@/components/admin/sidebar";
 import { AdminHeader } from "@/components/admin/admin-header";
-import { AdminBreadcrumbs } from "@/components/admin/admin-breadcrumbs";
 
 export default async function AdminLayout({
   children,
@@ -11,14 +10,14 @@ export default async function AdminLayout({
   const session = await requireAuth();
 
   return (
-    <div className="admin-workspace lg:flex">
+    <div className="min-h-screen bg-background">
       {/* Desktop Sidebar */}
-      <div className="hidden lg:inset-y-0 lg:z-50 lg:flex lg:w-52">
-        <Sidebar className="w-full" />
+      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72">
+        <Sidebar />
       </div>
 
       {/* Main Content Area */}
-      <div className="grow flex flex-col relative">
+      <div className="lg:pl-72">
         <AdminHeader
           user={{
             name: session.user.name,
@@ -26,10 +25,7 @@ export default async function AdminLayout({
             role: session.user.role,
           }}
         />
-        <main className="px-3 pb-3">
-          <AdminBreadcrumbs />
-          {children}
-        </main>
+        <main>{children}</main>
       </div>
     </div>
   );

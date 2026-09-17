@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-utils";
-import { logServiceActivity } from "@/lib/activity";
 import {
   serviceSchema,
   type ServiceFormData,
@@ -133,7 +132,6 @@ export async function createService(data: ServiceFormData) {
     },
   });
 
-  await logServiceActivity("CREATED", service.id, { name: service.name });
   revalidatePath("/admin/services");
   redirect(`/admin/services/${service.id}`);
 }
@@ -160,7 +158,6 @@ export async function updateService(id: string, data: ServiceFormData) {
     },
   });
 
-  await logServiceActivity("UPDATED", id, { name: validated.name });
   revalidatePath("/admin/services");
   revalidatePath(`/admin/services/${id}`);
   redirect(`/admin/services/${id}`);
@@ -193,7 +190,6 @@ export async function deleteService(id: string) {
 
   await prisma.service.delete({ where: { id } });
 
-  await logServiceActivity("DELETED", id, { name: existing.name });
   revalidatePath("/admin/services");
   redirect("/admin/services");
 }
@@ -211,12 +207,6 @@ export async function toggleServiceActive(id: string) {
     data: { isActive: !existing.isActive },
   });
 
-  await logServiceActivity("STATUS_CHANGED", id, {
-    name: existing.name,
-    field: "isActive",
-    from: existing.isActive,
-    to: !existing.isActive,
-  });
   revalidatePath("/admin/services");
   revalidatePath(`/admin/services/${id}`);
 }
@@ -234,12 +224,6 @@ export async function toggleServiceFeatured(id: string) {
     data: { isFeatured: !existing.isFeatured },
   });
 
-  await logServiceActivity("STATUS_CHANGED", id, {
-    name: existing.name,
-    field: "isFeatured",
-    from: existing.isFeatured,
-    to: !existing.isFeatured,
-  });
   revalidatePath("/admin/services");
   revalidatePath(`/admin/services/${id}`);
 }

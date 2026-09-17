@@ -26,7 +26,7 @@ export async function getPublicCompanySettings(): Promise<PublicCompanySettings>
  */
 export async function getPublicServices() {
   try {
-    const services = await prisma.service.findMany({
+    return prisma.service.findMany({
       where: { isActive: true },
       select: {
         id: true,
@@ -38,12 +38,6 @@ export async function getPublicServices() {
       },
       orderBy: { name: "asc" },
     });
-
-    // Convert Prisma Decimal fields to plain numbers for client component serialization
-    return services.map((service) => ({
-      ...service,
-      rate: service.rate != null ? Number(service.rate) : 0,
-    }));
   } catch {
     return [];
   }
@@ -54,7 +48,7 @@ export async function getPublicServices() {
  */
 export async function getFeaturedServices() {
   try {
-    const services = await prisma.service.findMany({
+    return prisma.service.findMany({
       where: { isActive: true, isFeatured: true },
       select: {
         id: true,
@@ -65,12 +59,6 @@ export async function getFeaturedServices() {
       },
       orderBy: { name: "asc" },
     });
-
-    // Convert Prisma Decimal fields to plain numbers for client component serialization
-    return services.map((service) => ({
-      ...service,
-      rate: service.rate != null ? Number(service.rate) : 0,
-    }));
   } catch {
     return [];
   }
@@ -81,7 +69,7 @@ export async function getFeaturedServices() {
  */
 export async function getPublicProjects() {
   try {
-    const projects = await prisma.project.findMany({
+    return prisma.project.findMany({
       where: {
         status: { in: ["COMPLETED", "ONGOING"] },
       },
@@ -113,12 +101,6 @@ export async function getPublicProjects() {
       orderBy: { createdAt: "desc" },
       take: 12,
     });
-
-    // Convert Prisma Decimal fields to plain numbers for client component serialization
-    return projects.map((project) => ({
-      ...project,
-      totalValue: project.totalValue != null ? Number(project.totalValue) : 0,
-    }));
   } catch {
     return [];
   }

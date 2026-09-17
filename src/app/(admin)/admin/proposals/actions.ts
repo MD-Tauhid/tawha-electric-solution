@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-utils";
-import { logProposalActivity } from "@/lib/activity";
 import {
   proposalSchema,
   type ProposalFormData,
@@ -199,9 +198,6 @@ export async function createProposal(data: ProposalFormData) {
     },
   });
 
-  await logProposalActivity("CREATED", proposal.id, {
-    proposalNumber: proposal.proposalNumber,
-  });
   revalidatePath("/admin/proposals");
   redirect(`/admin/proposals/${proposal.id}`);
 }
@@ -255,9 +251,6 @@ export async function updateProposal(id: string, data: ProposalFormData) {
     });
   });
 
-  await logProposalActivity("UPDATED", id, {
-    proposalNumber: existing.proposalNumber,
-  });
   revalidatePath("/admin/proposals");
   revalidatePath(`/admin/proposals/${id}`);
   redirect(`/admin/proposals/${id}`);
@@ -277,9 +270,6 @@ export async function deleteProposal(id: string) {
     await tx.proposal.delete({ where: { id } });
   });
 
-  await logProposalActivity("DELETED", id, {
-    proposalNumber: existing.proposalNumber,
-  });
   revalidatePath("/admin/proposals");
   redirect("/admin/proposals");
 }

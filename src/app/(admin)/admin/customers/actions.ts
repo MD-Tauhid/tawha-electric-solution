@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-utils";
-import { logCustomerActivity } from "@/lib/activity";
 import {
   customerSchema,
   type CustomerFormData,
@@ -155,7 +154,6 @@ export async function createCustomer(data: CustomerFormData) {
     },
   });
 
-  await logCustomerActivity("CREATED", customer.id, { name: customer.name });
   revalidatePath("/admin/customers");
   redirect(`/admin/customers/${customer.id}`);
 }
@@ -186,7 +184,6 @@ export async function updateCustomer(id: string, data: CustomerFormData) {
     },
   });
 
-  await logCustomerActivity("UPDATED", id, { name: validated.name });
   revalidatePath("/admin/customers");
   revalidatePath(`/admin/customers/${id}`);
   redirect(`/admin/customers/${id}`);
@@ -219,7 +216,6 @@ export async function deleteCustomer(id: string) {
 
   await prisma.customer.delete({ where: { id } });
 
-  await logCustomerActivity("DELETED", id, { name: existing.name });
   revalidatePath("/admin/customers");
   redirect("/admin/customers");
 }

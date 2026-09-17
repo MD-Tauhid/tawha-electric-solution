@@ -113,7 +113,7 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/customers/${customer.id}`}>
-                        <Button variant="default" size="sm">
+                        <Button variant="ghost" size="sm">
                           View
                         </Button>
                       </Link>

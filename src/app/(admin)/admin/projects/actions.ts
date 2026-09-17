@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-utils";
-import { logProjectActivity } from "@/lib/activity";
 import {
   projectSchema,
   type ProjectFormData,
@@ -256,10 +255,6 @@ export async function createProject(data: ProjectFormData) {
     },
   });
 
-  await logProjectActivity("CREATED", project.id, {
-    name: project.name,
-    projectNumber: project.projectNumber,
-  });
   revalidatePath("/admin/projects");
   redirect(`/admin/projects/${project.id}`);
 }
@@ -315,7 +310,6 @@ export async function updateProject(id: string, data: ProjectFormData) {
     });
   });
 
-  await logProjectActivity("UPDATED", id, { name: validated.name });
   revalidatePath("/admin/projects");
   revalidatePath(`/admin/projects/${id}`);
   redirect(`/admin/projects/${id}`);
@@ -351,10 +345,6 @@ export async function deleteProject(id: string) {
     await tx.project.delete({ where: { id } });
   });
 
-  await logProjectActivity("DELETED", id, {
-    name: existing.name,
-    projectNumber: existing.projectNumber,
-  });
   revalidatePath("/admin/projects");
   redirect("/admin/projects");
 }
@@ -382,11 +372,6 @@ export async function updateProjectStatus(
     data: updateData,
   });
 
-  await logProjectActivity("STATUS_CHANGED", id, {
-    name: existing.name,
-    from: existing.status,
-    to: status,
-  });
   revalidatePath("/admin/projects");
   revalidatePath(`/admin/projects/${id}`);
 }

@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-utils";
-import { logBillActivity } from "@/lib/activity";
 import {
   billSchema,
   type BillFormData,
@@ -301,10 +300,6 @@ export async function createBill(data: BillFormData) {
     },
   });
 
-  await logBillActivity("CREATED", bill.id, {
-    billNumber: bill.billNumber,
-    payableAmount: Number(payableAmount),
-  });
   revalidatePath("/admin/bills");
   revalidatePath(`/admin/projects/${validated.projectId}`);
   redirect(`/admin/bills/${bill.id}`);
@@ -340,11 +335,6 @@ export async function updateBillStatus(
     data: { status },
   });
 
-  await logBillActivity("STATUS_CHANGED", id, {
-    billNumber: existing.billNumber,
-    from: existing.status,
-    to: status,
-  });
   revalidatePath("/admin/bills");
   revalidatePath(`/admin/bills/${id}`);
   revalidatePath(`/admin/projects/${existing.projectId}`);
@@ -378,9 +368,6 @@ export async function deleteBill(id: string) {
 
   await prisma.bill.delete({ where: { id } });
 
-  await logBillActivity("DELETED", id, {
-    billNumber: existing.billNumber,
-  });
   revalidatePath("/admin/bills");
   revalidatePath(`/admin/projects/${projectId}`);
   redirect("/admin/bills");

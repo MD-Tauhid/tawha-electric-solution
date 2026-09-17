@@ -19,28 +19,30 @@ export function Sidebar({ className, onNavigate }: SidebarProps) {
   return (
     <div
       className={cn(
-        "admin-sidebar flex h-full flex-col",
+        "flex h-full flex-col bg-card border-r border-border",
         className
       )}
     >
       {/* Logo */}
-      <div className="flex h-20 items-center px-5">
+      <div className="flex h-16 items-center border-b border-border px-5">
         <Link href="/admin" className="flex items-center gap-2.5" onClick={onNavigate}>
-          <Zap className="h-5 w-5 fill-[#101936] text-[#101936]" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <Zap className="h-5 w-5" />
+          </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-[#101936] text-base leading-tight">
-              Tawha
+            <span className="font-semibold text-card-foreground text-sm leading-tight">
+              Tawha Electrical
             </span>
-            <span className="text-[11px] text-[#66718f] leading-tight">
-              Electrical Solution
+            <span className="text-[11px] text-muted-foreground leading-tight">
+              Admin Panel
             </span>
           </div>
         </Link>
       </div>
 
       {/* Navigation */}
-      <ScrollArea className="flex-1 px-3 py-5">
-        <nav className="flex flex-col gap-1.5">
+      <ScrollArea className="flex-1 px-3 py-3">
+        <nav className="flex flex-col gap-0.5">
           {navItems.map((item) => (
             <SidebarItem
               key={item.href}
@@ -53,8 +55,10 @@ export function Sidebar({ className, onNavigate }: SidebarProps) {
       </ScrollArea>
 
       {/* Footer */}
-      <div className="px-5 py-5">
-        <p className="text-[10px] uppercase tracking-[0.16em] text-[#66718f]">Admin workspace</p>
+      <div className="border-t border-border px-5 py-3">
+        <p className="text-[11px] text-muted-foreground">
+          Tawha Electrical Solution
+        </p>
       </div>
     </div>
   );
@@ -74,7 +78,9 @@ function SidebarItem({
   if (item.disabled) {
     return (
       <div
-        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#66718f] cursor-not-allowed opacity-50"
+        className={cn(
+          "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground cursor-not-allowed opacity-50"
+        )}
       >
         <Icon className="h-4 w-4 shrink-0" />
         <span>{item.title}</span>
@@ -87,10 +93,10 @@ function SidebarItem({
       href={item.href}
       onClick={onClick}
       className={cn(
-        "admin-nav-item flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150",
+        "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-150",
         isActive
-          ? "admin-nav-active font-semibold"
-          : ""
+          ? "bg-primary/10 text-primary font-semibold"
+          : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
       )}
     >
       <Icon className="h-4 w-4 shrink-0" />

@@ -115,7 +115,7 @@ export default async function ProposalsPage({ searchParams }: ProposalsPageProps
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/proposals/${proposal.id}`}>
-                        <Button variant="default" size="sm">
+                        <Button variant="ghost" size="sm">
                           View
                         </Button>
                       </Link>
