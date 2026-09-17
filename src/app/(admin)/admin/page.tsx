@@ -1,6 +1,4 @@
-import { Users, FolderKanban } from "lucide-react";
 import { DashboardShell } from "@/components/admin/dashboard-shell";
-import { StatsCard } from "@/components/admin/stats-card";
 import { DashboardStatsOverview } from "@/components/admin/dashboard/dashboard-stats-overview";
 import { MonthlyRevenueChart } from "@/components/admin/dashboard/monthly-revenue-chart";
 import { ProjectsByStatusChart } from "@/components/admin/dashboard/projects-by-status-chart";

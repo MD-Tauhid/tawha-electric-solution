@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-utils";
+import { logSettingsActivity } from "@/lib/activity";
 import {
   DEFAULT_COMPANY_SETTINGS,
   toCompanySettingsData,
@@ -58,6 +59,8 @@ export async function updateCompanySettings(data: CompanySettingsFormData) {
       data: dataToSave,
     });
   }
+
+  await logSettingsActivity("UPDATED", { companyName: validated.companyName });
 
   // Reflect updated information on the public website immediately.
   revalidatePath("/");

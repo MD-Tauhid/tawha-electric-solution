@@ -1,6 +1,7 @@
 import { requireAuth } from "@/lib/auth-utils";
 import { Sidebar } from "@/components/admin/sidebar";
 import { AdminHeader } from "@/components/admin/admin-header";
+import { AdminBreadcrumbs } from "@/components/admin/admin-breadcrumbs";
 
 export default async function AdminLayout({
   children,
@@ -25,7 +26,10 @@ export default async function AdminLayout({
             role: session.user.role,
           }}
         />
-        <main>{children}</main>
+        <main className="px-3 pb-3">
+          <AdminBreadcrumbs />
+          {children}
+        </main>
       </div>
     </div>
   );

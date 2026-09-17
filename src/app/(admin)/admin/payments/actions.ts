@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-utils";
+import { logPaymentActivity } from "@/lib/activity";
 import {
   paymentSchema,
   type PaymentFormData,
@@ -377,6 +378,11 @@ export async function createPayment(data: PaymentFormData) {
     return newPayment;
   });
 
+  await logPaymentActivity("CREATED", payment.id, {
+    amount: Number(validated.amount),
+    method: validated.method,
+    billId: validated.billId,
+  });
   revalidatePath("/admin/payments");
   revalidatePath(`/admin/bills/${validated.billId}`);
   revalidatePath(`/admin/projects/${bill.projectId}`);
@@ -391,6 +397,8 @@ export async function deletePayment(id: string) {
     select: {
       id: true,
       billId: true,
+      amount: true,
+      method: true,
     },
   });
 
@@ -423,6 +431,10 @@ export async function deletePayment(id: string) {
     });
   });
 
+  await logPaymentActivity("DELETED", id, {
+    amount: Number(existing.amount),
+    method: existing.method,
+  });
   revalidatePath("/admin/payments");
   revalidatePath(`/admin/bills/${existing.billId}`);
   revalidatePath(`/admin/projects/${bill.projectId}`);
