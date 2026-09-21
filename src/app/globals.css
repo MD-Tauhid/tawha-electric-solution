@@ -134,6 +134,11 @@ html[data-theme="light"] .public-section [class*="bg-blue-6"] {
   background-color: #2563eb !important;
 }
 
+html[data-theme="light"] .public-section [class*="bg-blue-"][class*="text-white"],
+html[data-theme="light"] .public-section [class*="bg-cyan-"][class*="text-white"] {
+  color: #ffffff !important;
+}
+
 html[data-theme="light"] .public-section [class*="border-slate-"],
 html[data-theme="light"] .public-section [class*="border-blue-"] {
   border-color: #cfe0f7 !important;
