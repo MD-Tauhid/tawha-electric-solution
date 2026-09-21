@@ -12,6 +12,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
+import { ThemeToggle } from "@/components/theme/theme-toggle";
 
 export interface BreadcrumbEntry {
   label: string;
@@ -56,6 +57,7 @@ export function AdminHeader({ breadcrumbs = [], user }: AdminHeaderProps) {
         </Breadcrumb>
       )}
       <div className="flex-1" />
+      <ThemeToggle />
       <UserMenu user={user} />
     </header>
   );

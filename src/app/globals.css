@@ -22,31 +22,69 @@
 }
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f4f9ff;
+  --foreground: #10233f;
 
-  --primary: #1e40af;
+  --primary: #2563eb;
   --primary-foreground: #ffffff;
 
-  --secondary: #f1f5f9;
-  --secondary-foreground: #0f172a;
+  --secondary: #e8f1ff;
+  --secondary-foreground: #17345e;
 
   --destructive: #dc2626;
   --destructive-foreground: #ffffff;
 
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
+  --muted: #e8f1ff;
+  --muted-foreground: #5b6f8a;
 
-  --accent: #f1f5f9;
-  --accent-foreground: #0f172a;
+  --accent: #dbeafe;
+  --accent-foreground: #17345e;
 
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #1e40af;
+  --border: #cfe0f7;
+  --input: #cfe0f7;
+  --ring: #2563eb;
 
   --surface: #ffffff;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #10233f;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --background: #1e1e1e;
+  --foreground: #f5f1e8;
+
+  --primary: #d4a72c;
+  --primary-foreground: #090909;
+
+  --secondary: #292929;
+  --secondary-foreground: #f5f1e8;
+
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+
+  --muted: #292929;
+  --muted-foreground: #bdb8ad;
+
+  --accent: #37322a;
+  --accent-foreground: #f5f1e8;
+
+  --border: #444444;
+  --input: #444444;
+  --ring: #d4a72c;
+
+  --surface: #252525;
+  --card: #292929;
+  --card-foreground: #f5f1e8;
+}
+
+html[data-theme] body,
+html[data-theme] * {
+  border-color: var(--border);
+}
+
+html[data-theme] body {
+  transition: background-color 180ms ease, color 180ms ease;
 }
 
 /* Public site electric theme */
@@ -63,6 +101,82 @@
   --dark-surface: #334155;
   --glow-blue: rgba(37, 99, 235, 0.15);
   --glow-amber: rgba(245, 158, 11, 0.15);
+}
+
+/* Keep the existing public components visually coherent in both themes. */
+html[data-theme="light"] .public-section {
+  background: #f4f9ff;
+  color: #10233f;
+}
+
+html[data-theme="light"] .public-section [class*="bg-slate-950"],
+html[data-theme="light"] .public-section [class*="bg-slate-900"],
+html[data-theme="light"] .public-section [class*="bg-slate-800"] {
+  background-color: #f4f9ff !important;
+}
+
+html[data-theme="light"] .public-section [class*="text-white"] {
+  color: #10233f !important;
+}
+
+html[data-theme="light"] .public-section [class*="text-slate-300"],
+html[data-theme="light"] .public-section [class*="text-slate-400"],
+html[data-theme="light"] .public-section [class*="text-slate-500"] {
+  color: #5b6f8a !important;
+}
+
+html[data-theme="light"] .public-section [class*="text-blue-"],
+html[data-theme="light"] .public-section [class*="text-cyan-"] {
+  color: #2563eb !important;
+}
+
+html[data-theme="light"] .public-section [class*="bg-blue-6"] {
+  background-color: #2563eb !important;
+}
+
+html[data-theme="light"] .public-section [class*="border-slate-"],
+html[data-theme="light"] .public-section [class*="border-blue-"] {
+  border-color: #cfe0f7 !important;
+}
+
+html[data-theme="light"] .public-section [class*="bg-gradient"] {
+  background-image: linear-gradient(135deg, #f4f9ff, #dbeafe) !important;
+}
+
+html[data-theme="dark"] .public-section {
+  --electric-blue: #d4a72c;
+  --electric-blue-light: #f0c75e;
+  --electric-blue-dark: #b7791f;
+  --electric-cyan: #f0c75e;
+  --glow-blue: rgba(212, 167, 44, 0.2);
+}
+
+html[data-theme="dark"] .public-section [class*="bg-blue-"],
+html[data-theme="dark"] .public-section [class*="bg-cyan-"] {
+  background-color: #b7791f !important;
+}
+
+html[data-theme="dark"] .public-section [class*="text-blue-"],
+html[data-theme="dark"] .public-section [class*="text-cyan-"] {
+  color: #f0c75e !important;
+}
+
+html[data-theme="dark"] .public-section [class*="border-blue-"],
+html[data-theme="dark"] .public-section [class*="border-cyan-"] {
+  border-color: #725719 !important;
+}
+
+html[data-theme="dark"] .public-section [class*="bg-gradient"] {
+  background-image: linear-gradient(135deg, #1e1e1e, #302d27) !important;
+}
+
+html[data-theme="dark"] .public-section [class*="bg-slate-950"],
+html[data-theme="dark"] .public-section [class*="bg-slate-900"] {
+  background-color: #1e1e1e !important;
+}
+
+html[data-theme="dark"] .public-section [class*="bg-slate-800"] {
+  background-color: #292929 !important;
 }
 
 body {
@@ -160,6 +274,14 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #725719;
+}
+
+html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #d4a72c;
 }
 
 /* Reduced motion */
