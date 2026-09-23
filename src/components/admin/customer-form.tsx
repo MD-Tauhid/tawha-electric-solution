@@ -72,9 +72,9 @@ export function CustomerForm({ customer, onSubmit }: CustomerFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3 sm:space-y-4 lg:space-y-5 lg:grid grid-cols-5 gap-x-4">
       {/* Personal Information */}
-      <div className="rounded-xl border border-border/60 bg-card p-6">
+      <div className="lg:col-span-3 rounded-xl border border-border/60 bg-card p-6">
         <div className="flex items-center gap-2 mb-4">
           <User className="h-4 w-4 text-muted-foreground" />
           <h2 className="text-base font-semibold text-card-foreground">Personal Information</h2>
@@ -174,7 +174,7 @@ export function CustomerForm({ customer, onSubmit }: CustomerFormProps) {
       </div>
 
       {/* Address */}
-      <div className="rounded-xl border border-border/60 bg-card p-6">
+      <div className="lg:col-span-2 rounded-xl border border-border/60 bg-card p-6">
         <div className="flex items-center gap-2 mb-4">
           <MapPin className="h-4 w-4 text-muted-foreground" />
           <h2 className="text-base font-semibold text-card-foreground">Address</h2>
@@ -226,7 +226,7 @@ export function CustomerForm({ customer, onSubmit }: CustomerFormProps) {
       </div>
 
       {/* Notes */}
-      <div className="rounded-xl border border-border/60 bg-card p-6">
+      <div className="lg:col-span-5 rounded-xl border border-border/60 bg-card p-6">
         <div className="flex items-center gap-2 mb-4">
           <StickyNote className="h-4 w-4 text-muted-foreground" />
           <h2 className="text-base font-semibold text-card-foreground">Notes</h2>
@@ -244,7 +244,7 @@ export function CustomerForm({ customer, onSubmit }: CustomerFormProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-3">
+      <div className="lg:col-span-5 flex items-center gap-3">
         <Button type="submit" disabled={isSubmitting}>
           {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
           {customer ? "Update Customer" : "Create Customer"}

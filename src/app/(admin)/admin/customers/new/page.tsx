@@ -6,9 +6,9 @@ export default function NewCustomerPage() {
   return (
     <DashboardShell
       title="Create Customer"
-      description="Add a new customer to your database"
+      // description="Add a new customer to your database"
     >
-      <div className="max-w-2xl">
+      <div className="">
         <CustomerForm onSubmit={createCustomer} />
       </div>
     </DashboardShell>
