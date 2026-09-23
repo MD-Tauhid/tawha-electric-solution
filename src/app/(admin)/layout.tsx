@@ -12,12 +12,12 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen bg-background">
       {/* Desktop Sidebar */}
-      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72">
+      <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex w-2/12">
         <Sidebar />
       </div>
 
       {/* Main Content Area */}
-      <div className="lg:pl-72">
+      <div className="lg:w-10/12 lg:ml-auto">
         <AdminHeader
           user={{
             name: session.user.name,

@@ -16,7 +16,7 @@ export function DashboardShell({
   ...props
 }: DashboardShellProps) {
   return (
-    <div className={cn("flex-1 space-y-6 p-4 sm:p-6 lg:p-8", className)} {...props}>
+    <div className={cn("flex-1 space-y-3 sm:space-y-4 lg:space-y-4 p-3 sm:p-4 lg:p-5", className)} {...props}>
       {(title || actions) && (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>

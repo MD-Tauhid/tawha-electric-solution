@@ -125,11 +125,6 @@ html[data-theme="light"] .public-section [class*="text-slate-500"] {
   color: #5b6f8a !important;
 }
 
-html[data-theme="light"] .public-section [class*="text-blue-"],
-html[data-theme="light"] .public-section [class*="text-cyan-"] {
-  color: #2563eb !important;
-}
-
 html[data-theme="light"] .public-section [class*="bg-blue-6"] {
   background-color: #2563eb !important;
 }

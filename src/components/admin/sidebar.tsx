@@ -19,12 +19,12 @@ export function Sidebar({ className, onNavigate }: SidebarProps) {
   return (
     <div
       className={cn(
-        "flex h-full flex-col bg-card border-r border-border",
+        "flex h-full flex-col bg-card border-r border-border w-full",
         className
       )}
     >
       {/* Logo */}
-      <div className="flex h-16 items-center border-b border-border px-5">
+      <div className="flex h-14 items-center border-b border-border px-5">
         <Link href="/admin" className="flex items-center gap-2.5" onClick={onNavigate}>
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <Zap className="h-5 w-5" />

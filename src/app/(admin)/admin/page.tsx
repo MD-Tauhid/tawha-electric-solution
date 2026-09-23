@@ -32,7 +32,7 @@ export default async function AdminDashboard() {
   return (
     <DashboardShell
       title="Dashboard"
-      description="Welcome to the Tawha Electrical admin panel."
+      // description="Welcome to the Tawha Electrical admin panel."
     >
       {/* Top-level count stats */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
