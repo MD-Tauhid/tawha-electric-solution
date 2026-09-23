@@ -60,9 +60,9 @@ export function SettingsForm({ settings, onSubmit }: SettingsFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-3 sm:space-y-4 lg:space-y-5 lg:grid grid-cols-5 gap-4">
       {/* Company Information */}
-      <div className="rounded-xl border border-border/60 bg-card p-6">
+      <div className="lg:col-span-3 rounded-xl border border-border/60 bg-card p-6">
         <div className="flex items-center gap-2 mb-4">
           <Building2 className="h-4 w-4 text-muted-foreground" />
           <h2 className="text-base font-semibold text-card-foreground">Company Information</h2>
@@ -152,7 +152,7 @@ export function SettingsForm({ settings, onSubmit }: SettingsFormProps) {
       </div>
 
       {/* Social & Online Presence */}
-      <div className="rounded-xl border border-border/60 bg-card p-6">
+      <div className="lg:col-span-2 rounded-xl border border-border/60 bg-card p-6">
         <div className="flex items-center gap-2 mb-4">
           <MessageCircle className="h-4 w-4 text-muted-foreground" />
           <h2 className="text-base font-semibold text-card-foreground">Social & Online Presence</h2>

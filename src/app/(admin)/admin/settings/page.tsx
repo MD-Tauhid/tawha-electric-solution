@@ -11,11 +11,11 @@ export default async function SettingsPage() {
       title="Company Settings"
       description="Manage company information shown on the public website"
     >
-      <div className="max-w-2xl">
+      <div className="">
         <SettingsForm settings={settings} onSubmit={updateCompanySettings} />
       </div>
 
-      <div className="mt-8 max-w-2xl rounded-xl border border-border/60 bg-card p-6">
+      <div className="mt-8 rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-base font-semibold text-card-foreground mb-2 flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
             <Building2 className="h-4 w-4 text-muted-foreground" />
