@@ -71,7 +71,7 @@ export function WhyChooseUs() {
   return (
     <section className="relative py-24 sm:py-32 bg-gradient-to-b from-slate-950 to-slate-900">
       {/* Background accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-blue-600/[0.04] blur-3xl" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-160 h-150 rounded-full bg-blue-600/4 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -81,14 +81,14 @@ export function WhyChooseUs() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="text-sm font-semibold tracking-wider text-blue-400 uppercase">
+          <span className="text-sm font-bold tracking-wider text-blue-400 uppercase">
             Why Choose Us
           </span>
           <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             The Tawha{" "}
             <span className="gradient-text">Difference</span>
           </h2>
-          <p className="mt-4 text-lg text-slate-400/80 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-slate-200/80 max-w-2xl mx-auto">
             We don&apos;t just wire buildings — we build lasting relationships
             through unmatched quality, safety, and reliability.
           </p>

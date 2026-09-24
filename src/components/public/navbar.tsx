@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, Phone, X, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
@@ -43,9 +44,14 @@ export function Navbar({ companyName, phone }: NavbarProps) {
         <div className="flex h-16 items-center justify-between sm:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600 group-hover:bg-blue-500 transition-colors">
-              <Zap className="h-6 w-6 text-white" />
-            </div>
+            <Image
+              src="/brand/logo-bg-less.png"
+              alt={`${companyName} logo`}
+              width={42}
+              height={42}
+              className="h-10 w-10 object-contain transition-transform group-hover:scale-105"
+              priority
+            />
             <div className="hidden sm:block">
               <p className="text-lg font-bold text-white leading-tight">
                 {companyName.split(" ").slice(0, 2).join(" ")}

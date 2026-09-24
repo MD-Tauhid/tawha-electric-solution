@@ -1,6 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
-  Zap,
   Phone,
   Mail,
   MapPin,
@@ -25,9 +25,13 @@ export function Footer({ settings }: FooterProps) {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600 group-hover:bg-blue-500 transition-colors">
-                <Zap className="h-5 w-5 text-white" />
-              </div>
+              <Image
+                src="/brand/logo-bg-less.png"
+                alt={`${settings.companyName} logo`}
+                width={42}
+                height={42}
+                className="h-9 w-9 object-contain transition-transform group-hover:scale-105"
+              />
               <div>
                 <p className="text-base font-bold text-white leading-tight">
                   {settings.companyName.split(" ").slice(0, 2).join(" ")}

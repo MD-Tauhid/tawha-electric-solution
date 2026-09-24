@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Zap } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { navItems, type NavItem } from "@/config/navigation";
 import { ScrollArea } from "@/components/admin/scroll-area";
@@ -26,9 +26,13 @@ export function Sidebar({ className, onNavigate }: SidebarProps) {
       {/* Logo */}
       <div className="flex h-14 items-center border-b border-border px-5">
         <Link href="/admin" className="flex items-center gap-2.5" onClick={onNavigate}>
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Zap className="h-5 w-5" />
-          </div>
+          <Image
+            src="/brand/logo.png"
+            alt="Tawha Electrical logo"
+            width={42}
+            height={42}
+            className="h-9 w-9 rounded-lg object-contain"
+          />
           <div className="flex flex-col">
             <span className="font-semibold text-card-foreground text-sm leading-tight">
               Tawha Electrical

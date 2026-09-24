@@ -51,7 +51,7 @@ export function MobileSidebar() {
             onClick={() => setOpen(false)}
           />
           {/* Sidebar */}
-          <div className="fixed inset-y-0 left-0 z-50 w-72 animate-in slide-in-from-left duration-200">
+          <div className="fixed h-screen left-0 z-50 w-72 animate-in slide-in-from-left duration-200">
             <Sidebar onNavigate={() => setOpen(false)} />
           </div>
         </div>

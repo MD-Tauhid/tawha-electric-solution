@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Zap } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -46,9 +46,14 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-primary-foreground mb-4">
-            <Zap className="h-6 w-6" />
-          </div>
+          <Image
+            src="/brand/logo.png"
+            alt="Tawha Electrical logo"
+            width={64}
+            height={64}
+            className="mb-4 h-16 w-16 rounded-xl object-contain"
+            priority
+          />
           <h1 className="text-xl font-bold text-card-foreground">
             Tawha Electrical
           </h1>
