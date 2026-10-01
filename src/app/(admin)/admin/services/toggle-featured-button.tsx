@@ -40,7 +40,7 @@ export function ToggleFeaturedButton({
       size="sm"
       onClick={handleToggle}
       disabled={isToggling}
-      className={isFeatured ? "text-yellow-600" : "text-muted-foreground"}
+      className={`cursor-pointer ${isFeatured ? "text-yellow-600" : "text-muted-foreground"}`}
     >
       {isToggling ? (
         <LoadingSpinner size="sm" />

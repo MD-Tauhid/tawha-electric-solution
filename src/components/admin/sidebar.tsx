@@ -7,6 +7,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { navItems, type NavItem } from "@/config/navigation";
 import { ScrollArea } from "@/components/admin/scroll-area";
+import { X } from "lucide-react";
 
 interface SidebarProps {
   className?: string;
@@ -25,7 +26,7 @@ export function Sidebar({ className, onNavigate }: SidebarProps) {
     >
       {/* Logo */}
       <div className="flex h-14 items-center border-b border-border px-5">
-        <Link href="/admin" className="flex items-center gap-2.5" onClick={onNavigate}>
+        <Link href="/admin" className="flex items-center gap-2.5">
           <Image
             src="/brand/logo.png"
             alt="Tawha Electrical logo"
@@ -42,6 +43,9 @@ export function Sidebar({ className, onNavigate }: SidebarProps) {
             </span>
           </div>
         </Link>
+        <button onClick={onNavigate} className="ml-auto cursor-pointer rounded p-1 text-muted-foreground transition-colors hover:text-foreground lg:hidden">
+          <X className="h-5 w-5" />
+        </button>
       </div>
 
       {/* Navigation */}

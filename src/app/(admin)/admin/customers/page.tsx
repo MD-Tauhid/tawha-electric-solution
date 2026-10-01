@@ -75,7 +75,7 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
           <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow className="hover:bg-transparent">
+                <TableRow className="hover:bg-transparent bg-primary/15">
                   <TableHead>Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Company</TableHead>
                   <TableHead className="hidden sm:table-cell">Email</TableHead>
@@ -113,7 +113,7 @@ export default async function CustomersPage({ searchParams }: CustomersPageProps
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/customers/${customer.id}`}>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="default" size="sm" className="cursor-pointer">
                           View
                         </Button>
                       </Link>

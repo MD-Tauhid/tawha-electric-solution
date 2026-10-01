@@ -244,11 +244,7 @@ export function CustomerForm({ customer, onSubmit }: CustomerFormProps) {
       </div>
 
       {/* Actions */}
-      <div className="lg:col-span-5 flex items-center gap-3">
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
-          {customer ? "Update Customer" : "Create Customer"}
-        </Button>
+      <div className="lg:col-span-5 flex items-center justify-end gap-3">
         <Button
           type="button"
           variant="outline"
@@ -256,6 +252,10 @@ export function CustomerForm({ customer, onSubmit }: CustomerFormProps) {
           disabled={isSubmitting}
         >
           Cancel
+        </Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
+          {customer ? "Update Customer" : "Create Customer"}
         </Button>
       </div>
     </form>

@@ -78,7 +78,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
           <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow className="hover:bg-transparent">
+                <TableRow className="hover:bg-transparent bg-primary/15">
                   <TableHead>Name</TableHead>
                   <TableHead className="hidden sm:table-cell">Description</TableHead>
                   <TableHead>Rate</TableHead>
@@ -122,7 +122,7 @@ export default async function ServicesPage({ searchParams }: ServicesPageProps) 
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/services/${service.id}`}>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="default" size="sm" className="cursor-pointer">
                           View
                         </Button>
                       </Link>
