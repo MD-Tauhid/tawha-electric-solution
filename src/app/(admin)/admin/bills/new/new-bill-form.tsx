@@ -83,7 +83,7 @@ export function NewBillForm({ projects }: NewBillFormProps) {
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
       {/* Project Selection */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Project</h2>
         <div className="space-y-2">
           <Label htmlFor="projectId">
@@ -104,7 +104,7 @@ export function NewBillForm({ projects }: NewBillFormProps) {
       </div>
 
       {/* Bill Calculation */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Bill Calculation</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="space-y-2">
@@ -197,7 +197,7 @@ export function NewBillForm({ projects }: NewBillFormProps) {
       </div>
 
       {/* Notes */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Notes</h2>
         <Textarea
           id="notes"
@@ -208,11 +208,7 @@ export function NewBillForm({ projects }: NewBillFormProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
-          Create Bill
-        </Button>
+      <div className="flex items-center justify-end gap-4">
         <Button
           type="button"
           variant="outline"
@@ -220,6 +216,10 @@ export function NewBillForm({ projects }: NewBillFormProps) {
           disabled={isSubmitting}
         >
           Cancel
+        </Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
+          Create Bill
         </Button>
       </div>
     </form>

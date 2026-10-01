@@ -83,7 +83,7 @@ export default async function BillsPage({ searchParams }: BillsPageProps) {
           <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow className="hover:bg-transparent">
+                <TableRow className="hover:bg-transparent bg-primary/15">
                   <TableHead>Bill Number</TableHead>
                   <TableHead className="hidden sm:table-cell">
                     Project
@@ -130,7 +130,7 @@ export default async function BillsPage({ searchParams }: BillsPageProps) {
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/bills/${bill.id}`}>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="default" size="sm">
                           View
                         </Button>
                       </Link>

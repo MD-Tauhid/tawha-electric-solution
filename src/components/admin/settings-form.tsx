@@ -230,11 +230,7 @@ export function SettingsForm({ settings, onSubmit }: SettingsFormProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-3">
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
-          Save Settings
-        </Button>
+      <div className="lg:col-span-5 flex items-center justify-end gap-3">
         <Button
           type="button"
           variant="outline"
@@ -242,6 +238,10 @@ export function SettingsForm({ settings, onSubmit }: SettingsFormProps) {
           disabled={isSubmitting}
         >
           Cancel
+        </Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
+          Save Settings
         </Button>
       </div>
     </form>

@@ -85,7 +85,7 @@ export default async function PaymentsPage({ searchParams }: PaymentsPageProps) 
           <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow className="hover:bg-transparent">
+                <TableRow className="hover:bg-transparent bg-primary/15">
                   <TableHead>Date</TableHead>
                   <TableHead>Bill</TableHead>
                   <TableHead className="hidden sm:table-cell">
@@ -139,7 +139,7 @@ export default async function PaymentsPage({ searchParams }: PaymentsPageProps) 
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/payments/${payment.id}`}>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="default" size="sm">
                           View
                         </Button>
                       </Link>

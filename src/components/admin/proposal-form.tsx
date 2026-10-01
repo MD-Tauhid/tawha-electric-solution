@@ -170,7 +170,7 @@ export function ProposalForm({
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
       {/* Recipient Information */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Recipient Information</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {/* Customer */}
@@ -214,7 +214,7 @@ export function ProposalForm({
       </div>
 
       {/* Project Information */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Project Information</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {/* Project Name */}
@@ -240,7 +240,7 @@ export function ProposalForm({
       </div>
 
       {/* Proposal Items */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">Services</h2>
           <Button type="button" variant="outline" size="sm" onClick={addItem}>
@@ -355,7 +355,7 @@ export function ProposalForm({
       </div>
 
       {/* Additional Charges & Discount */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Adjustments</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
@@ -408,7 +408,7 @@ export function ProposalForm({
       </div>
 
       {/* Terms & Notes */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Terms & Notes</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">

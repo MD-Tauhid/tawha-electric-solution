@@ -113,7 +113,7 @@ export function NewPaymentForm({ bills }: NewPaymentFormProps) {
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
       {/* Bill Selection */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Bill Selection</h2>
         <div className="space-y-2">
           <Label htmlFor="billId">
@@ -182,7 +182,7 @@ export function NewPaymentForm({ bills }: NewPaymentFormProps) {
       </div>
 
       {/* Payment Details */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Payment Details</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-2">
@@ -260,7 +260,7 @@ export function NewPaymentForm({ bills }: NewPaymentFormProps) {
       </div>
 
       {/* Notes */}
-      <div className="rounded-lg border bg-white p-6">
+      <div className="rounded-xl border border-border/60 bg-card p-6">
         <h2 className="text-lg font-semibold mb-4">Notes</h2>
         <Textarea
           id="notes"
@@ -271,11 +271,7 @@ export function NewPaymentForm({ bills }: NewPaymentFormProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-4">
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
-          Record Payment
-        </Button>
+      <div className="flex items-center justify-end gap-4">
         <Button
           type="button"
           variant="outline"
@@ -283,6 +279,10 @@ export function NewPaymentForm({ bills }: NewPaymentFormProps) {
           disabled={isSubmitting}
         >
           Cancel
+        </Button>
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting && <LoadingSpinner size="sm" className="mr-2" />}
+          Record Payment
         </Button>
       </div>
     </form>

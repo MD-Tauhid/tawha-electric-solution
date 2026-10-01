@@ -8,7 +8,7 @@ export default function NewServicePage() {
       title="Create Service"
       description="Add a new service to your catalog"
     >
-      <div className="max-w-2xl">
+      <div className="max-w-2xl mx-auto mt-5">
         <ServiceForm onSubmit={createService} />
       </div>
     </DashboardShell>

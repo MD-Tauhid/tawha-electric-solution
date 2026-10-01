@@ -74,7 +74,7 @@ export default async function ProposalsPage({ searchParams }: ProposalsPageProps
           <div className="rounded-xl border border-border/60 bg-card overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow className="hover:bg-transparent">
+                <TableRow className="hover:bg-transparent bg-primary/15">
                   <TableHead>Proposal Number</TableHead>
                   <TableHead>Customer</TableHead>
                   <TableHead className="hidden sm:table-cell">Project</TableHead>
@@ -115,7 +115,7 @@ export default async function ProposalsPage({ searchParams }: ProposalsPageProps
                     </TableCell>
                     <TableCell className="text-right">
                       <Link href={`/admin/proposals/${proposal.id}`}>
-                        <Button variant="ghost" size="sm">
+                        <Button variant="default" size="sm">
                           View
                         </Button>
                       </Link>
