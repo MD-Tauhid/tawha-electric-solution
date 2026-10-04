@@ -52,11 +52,11 @@ export function Navbar({ companyName, phone }: NavbarProps) {
               className="h-10 w-10 object-contain transition-transform group-hover:scale-105"
               priority
             />
-            <div className="hidden sm:block">
-              <p className="text-lg font-bold text-white leading-tight">
+            <div>
+              <p className="text-sm font-bold text-white leading-tight sm:text-lg">
                 {companyName.split(" ").slice(0, 2).join(" ")}
               </p>
-              <p className="text-xs text-slate-400 leading-tight">
+              <p className="text-[10px] text-slate-400 leading-tight sm:text-xs">
                 {companyName.split(" ").slice(2).join(" ") || "Electrical"}
               </p>
             </div>
@@ -95,18 +95,18 @@ export function Navbar({ companyName, phone }: NavbarProps) {
           </div>
 
           {/* Mobile menu button */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:text-white hover:bg-white/10"
-            aria-label="Toggle menu"
-          >
-            {mobileOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="inline-flex items-center justify-center rounded-lg p-2 text-slate-300 hover:text-white hover:bg-white/10"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
             <ThemeToggle />
           </div>
         </div>

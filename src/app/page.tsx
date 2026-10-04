@@ -54,7 +54,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div className="public-section">
+    <div className="public-section overflow-x-clip">
       <Navbar companyName={settings.companyName} phone={settings.phone} />
       <main>
         <HeroSection phone={settings.phone} />
