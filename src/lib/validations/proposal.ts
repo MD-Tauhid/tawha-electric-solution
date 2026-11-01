@@ -1,55 +1,81 @@
 import { z } from "zod";
 
-export const proposalItemSchema = z.object({
-  id: z.string().optional(),
-  serviceId: z.string().min(1, "Service is required"),
-  quantity: z.number().min(0.01, "Quantity must be greater than 0"),
-  rate: z.number().min(0, "Rate must be a positive number"),
-  totalAmount: z.number().min(0, "Total must be a positive number"),
-});
+export const proposalItemSchema = z
+  .object({
+    id: z.string().optional(),
+    // Existing service (empty string when the user typed a new one)
+    serviceId: z.string().default(""),
+    // New service name typed by the user (empty when an existing one is picked)
+    serviceName: z
+      .string()
+      .trim()
+      .max(255, "Service name must be 255 characters or less")
+      .default(""),
+    quantity: z.number().min(0.01, "Quantity must be greater than 0"),
+    rate: z.number().min(0, "Rate must be a positive number"),
+    totalAmount: z.number().min(0, "Total must be a positive number"),
+  })
+  .refine((item) => item.serviceId || item.serviceName, {
+    message: "Select or enter a service",
+    path: ["serviceId"],
+  });
 
-export const proposalSchema = z.object({
-  recipientName: z
-    .string()
-    .max(255, "Recipient name must be 255 characters or less")
-    .optional()
-    .or(z.literal("")),
-  recipientAddress: z
-    .string()
-    .max(500, "Recipient address must be 500 characters or less")
-    .optional()
-    .or(z.literal("")),
-  customerId: z.string().min(1, "Customer is required"),
-  projectName: z
-    .string()
-    .max(255, "Project name must be 255 characters or less")
-    .optional()
-    .or(z.literal("")),
-  projectAddress: z
-    .string()
-    .max(500, "Project address must be 500 characters or less")
-    .optional()
-    .or(z.literal("")),
-  additionalCharges: z
-    .number()
-    .min(0, "Additional charges must be a positive number")
-    .default(0),
-  discount: z
-    .number()
-    .min(0, "Discount must be a positive number")
-    .default(0),
-  terms: z
-    .string()
-    .max(5000, "Terms must be 5000 characters or less")
-    .optional()
-    .or(z.literal("")),
-  notes: z
-    .string()
-    .max(2000, "Notes must be 2000 characters or less")
-    .optional()
-    .or(z.literal("")),
-  items: z.array(proposalItemSchema).min(1, "At least one proposal item is required"),
-});
+export const proposalSchema = z
+  .object({
+    recipientName: z
+      .string()
+      .max(255, "Recipient name must be 255 characters or less")
+      .optional()
+      .or(z.literal("")),
+    recipientAddress: z
+      .string()
+      .max(500, "Recipient address must be 500 characters or less")
+      .optional()
+      .or(z.literal("")),
+    // Existing customer (empty string when the user typed a new one)
+    customerId: z.string().default(""),
+    // New customer name typed by the user (empty when an existing one is picked)
+    newCustomerName: z
+      .string()
+      .trim()
+      .max(255, "Customer name must be 255 characters or less")
+      .default(""),
+    projectName: z
+      .string()
+      .max(255, "Project name must be 255 characters or less")
+      .optional()
+      .or(z.literal("")),
+    projectAddress: z
+      .string()
+      .max(500, "Project address must be 500 characters or less")
+      .optional()
+      .or(z.literal("")),
+    additionalCharges: z
+      .number()
+      .min(0, "Additional charges must be a positive number")
+      .default(0),
+    discount: z
+      .number()
+      .min(0, "Discount must be a positive number")
+      .default(0),
+    terms: z
+      .string()
+      .max(5000, "Terms must be 5000 characters or less")
+      .optional()
+      .or(z.literal("")),
+    notes: z
+      .string()
+      .max(2000, "Notes must be 2000 characters or less")
+      .optional()
+      .or(z.literal("")),
+    items: z
+      .array(proposalItemSchema)
+      .min(1, "At least one proposal item is required"),
+  })
+  .refine((data) => data.customerId || data.newCustomerName, {
+    message: "Select or enter a customer",
+    path: ["customerId"],
+  });
 
 export type ProposalFormData = z.infer<typeof proposalSchema>;
 export type ProposalItemFormData = z.infer<typeof proposalItemSchema>;

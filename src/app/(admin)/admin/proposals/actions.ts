@@ -11,6 +11,8 @@ import {
   type ProposalSearchParams,
 } from "@/lib/validations/proposal";
 
+type Tx = Parameters<Parameters<typeof prisma.$transaction>[0]>[0];
+
 function generateProposalNumber(): string {
   const now = new Date();
   const year = now.getFullYear();
@@ -19,6 +21,90 @@ function generateProposalNumber(): string {
     .toString()
     .padStart(4, "0");
   return `PROP-${year}${month}-${random}`;
+}
+
+/**
+ * Turns the form's "existing id OR typed name" fields into real IDs.
+ * - Reuses an existing customer/service when the typed name matches one
+ *   (case-insensitive), so typing "acme" won't create a duplicate "Acme".
+ * - Creates a new record only when nothing matches.
+ * - Reuses the same new service if it appears on several lines.
+ * Must run inside a transaction so a failure doesn't leave orphan records.
+ */
+async function resolveCustomerAndItems(tx: Tx, validated: ProposalFormData) {
+  // ---- Customer ----
+  let customerId = validated.customerId;
+
+  if (!customerId) {
+    const name = validated.newCustomerName;
+
+    const existingCustomer = await tx.customer.findFirst({
+      where: { name: { equals: name, mode: "insensitive" } },
+      select: { id: true },
+    });
+
+    if (existingCustomer) {
+      customerId = existingCustomer.id;
+    } else {
+      const created = await tx.customer.create({
+        data: { name },
+        select: { id: true },
+      });
+      customerId = created.id;
+    }
+  }
+
+  // ---- Services / items ----
+  const newServiceIds = new Map<string, string>(); // lowercased name -> id
+
+  const items: Array<{
+    serviceId: string;
+    quantity: number;
+    rate: number;
+    totalAmount: number;
+  }> = [];
+
+  for (const item of validated.items) {
+    let serviceId = item.serviceId;
+
+    if (!serviceId) {
+      const key = item.serviceName.toLowerCase();
+      const cached = newServiceIds.get(key);
+
+      if (cached) {
+        serviceId = cached;
+      } else {
+        const existingService = await tx.service.findFirst({
+          where: { name: { equals: item.serviceName, mode: "insensitive" } },
+          select: { id: true },
+        });
+
+        if (existingService) {
+          serviceId = existingService.id;
+        } else {
+          const created = await tx.service.create({
+            data: {
+              name: item.serviceName,
+              rate: item.rate,
+            },
+            select: { id: true },
+          });
+          serviceId = created.id;
+        }
+
+        newServiceIds.set(key, serviceId);
+      }
+    }
+
+    items.push({
+      serviceId,
+      quantity: item.quantity,
+      rate: item.rate,
+      totalAmount: item.quantity * item.rate,
+    });
+  }
+
+  return { customerId, items };
 }
 
 export type ProposalListResult = {
@@ -174,28 +260,28 @@ export async function createProposal(data: ProposalFormData) {
     attempts++;
   }
 
-  const proposal = await prisma.proposal.create({
-    data: {
-      proposalNumber,
-      recipientName: validated.recipientName || null,
-      recipientAddress: validated.recipientAddress || null,
-      customerId: validated.customerId,
-      projectName: validated.projectName || null,
-      projectAddress: validated.projectAddress || null,
-      additionalCharges: validated.additionalCharges,
-      discount: validated.discount,
-      totalAmount,
-      terms: validated.terms || null,
-      notes: validated.notes || null,
-      items: {
-        create: validated.items.map((item) => ({
-          serviceId: item.serviceId,
-          quantity: item.quantity,
-          rate: item.rate,
-          totalAmount: item.quantity * item.rate,
-        })),
+  // Create any new customer/services and the proposal in one transaction
+  const proposal = await prisma.$transaction(async (tx) => {
+    const { customerId, items } = await resolveCustomerAndItems(tx, validated);
+
+    return tx.proposal.create({
+      data: {
+        proposalNumber,
+        recipientName: validated.recipientName || null,
+        recipientAddress: validated.recipientAddress || null,
+        customerId,
+        projectName: validated.projectName || null,
+        projectAddress: validated.projectAddress || null,
+        additionalCharges: validated.additionalCharges,
+        discount: validated.discount,
+        totalAmount,
+        terms: validated.terms || null,
+        notes: validated.notes || null,
+        items: {
+          create: items,
+        },
       },
-    },
+    });
   });
 
   revalidatePath("/admin/proposals");
@@ -222,6 +308,8 @@ export async function updateProposal(id: string, data: ProposalFormData) {
 
   // Update proposal with items in a transaction
   await prisma.$transaction(async (tx) => {
+    const { customerId, items } = await resolveCustomerAndItems(tx, validated);
+
     // Delete existing items
     await tx.proposalItem.deleteMany({ where: { proposalId: id } });
 
@@ -231,7 +319,7 @@ export async function updateProposal(id: string, data: ProposalFormData) {
       data: {
         recipientName: validated.recipientName || null,
         recipientAddress: validated.recipientAddress || null,
-        customerId: validated.customerId,
+        customerId,
         projectName: validated.projectName || null,
         projectAddress: validated.projectAddress || null,
         additionalCharges: validated.additionalCharges,
@@ -240,12 +328,7 @@ export async function updateProposal(id: string, data: ProposalFormData) {
         terms: validated.terms || null,
         notes: validated.notes || null,
         items: {
-          create: validated.items.map((item) => ({
-            serviceId: item.serviceId,
-            quantity: item.quantity,
-            rate: item.rate,
-            totalAmount: item.quantity * item.rate,
-          })),
+          create: items,
         },
       },
     });

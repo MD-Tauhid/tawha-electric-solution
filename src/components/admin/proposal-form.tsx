@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select } from "@/components/ui/select";
+import { Combobox } from "@/components/shared/combobox";
 import { LoadingSpinner } from "@/components/shared/loading-spinner";
 import {
   proposalSchema,
@@ -64,21 +64,15 @@ export function ProposalForm({
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
-  const customerOptions = [
-    { value: "", label: "Select a customer" },
-    ...customers.map((c) => ({
-      value: c.id,
-      label: c.companyName ? `${c.name} (${c.companyName})` : c.name,
-    })),
-  ];
+  const customerOptions = customers.map((c) => ({
+    value: c.id,
+    label: c.companyName ? `${c.name} (${c.companyName})` : c.name,
+  }));
 
-  const serviceOptions = [
-    { value: "", label: "Select a service" },
-    ...services.map((s) => ({
-      value: s.id,
-      label: `${s.name} - $${Number(s.rate).toLocaleString()}/${s.unit}`,
-    })),
-  ];
+  const serviceOptions = services.map((s) => ({
+    value: s.id,
+    label: s.name,
+  }));
 
   const {
     register,
@@ -93,6 +87,7 @@ export function ProposalForm({
       recipientName: proposal?.recipientName ?? "",
       recipientAddress: proposal?.recipientAddress ?? "",
       customerId: proposal?.customerId ?? "",
+      newCustomerName: "",
       projectName: proposal?.projectName ?? "",
       projectAddress: proposal?.projectAddress ?? "",
       additionalCharges: proposal?.additionalCharges
@@ -104,10 +99,13 @@ export function ProposalForm({
       items: proposal?.items.map((item) => ({
         id: item.id,
         serviceId: item.serviceId,
+        serviceName: "",
         quantity: Number(item.quantity),
         rate: Number(item.rate),
         totalAmount: Number(item.totalAmount),
-      })) ?? [{ serviceId: "", quantity: 1, rate: 0, totalAmount: 0 }],
+      })) ?? [
+        { serviceId: "", serviceName: "", quantity: 1, rate: 0, totalAmount: 0 },
+      ],
     },
   });
 
@@ -119,6 +117,8 @@ export function ProposalForm({
   const watchItems = watch("items");
   const watchAdditionalCharges = watch("additionalCharges");
   const watchDiscount = watch("discount");
+  const watchCustomerId = watch("customerId");
+  const watchNewCustomerName = watch("newCustomerName");
 
   // Calculate totals
   const itemsTotal = watchItems.reduce(
@@ -128,11 +128,27 @@ export function ProposalForm({
   const totalAmount =
     itemsTotal + (watchAdditionalCharges || 0) - (watchDiscount || 0);
 
-  function handleServiceChange(index: number, serviceId: string) {
-    const service = services.find((s) => s.id === serviceId);
+  function handleCustomerChange(next: { id: string; name: string }) {
+    setValue("customerId", next.id, { shouldValidate: true });
+    setValue("newCustomerName", next.id ? "" : next.name, {
+      shouldValidate: true,
+    });
+  }
+
+  function handleServiceChange(
+    index: number,
+    next: { id: string; name: string }
+  ) {
+    setValue(`items.${index}.serviceId`, next.id, { shouldValidate: true });
+    setValue(`items.${index}.serviceName`, next.id ? "" : next.name, {
+      shouldValidate: true,
+    });
+
+    // Only auto-fill the rate when an existing service is selected
+    const service = services.find((s) => s.id === next.id);
     if (service) {
-      setValue(`items.${index}.rate`, Number(service.rate));
       const quantity = watchItems[index]?.quantity || 1;
+      setValue(`items.${index}.rate`, Number(service.rate));
       setValue(`items.${index}.totalAmount`, quantity * Number(service.rate));
     }
   }
@@ -148,7 +164,13 @@ export function ProposalForm({
   }
 
   function addItem() {
-    append({ serviceId: "", quantity: 1, rate: 0, totalAmount: 0 });
+    append({
+      serviceId: "",
+      serviceName: "",
+      quantity: 1,
+      rate: 0,
+      totalAmount: 0,
+    });
   }
 
   async function handleFormSubmit(data: ProposalFormData) {
@@ -156,7 +178,9 @@ export function ProposalForm({
     try {
       await onSubmit(data);
       toast.success(
-        proposal ? "Proposal updated successfully" : "Proposal created successfully"
+        proposal
+          ? "Proposal updated successfully"
+          : "Proposal created successfully"
       );
     } catch (error) {
       toast.error(
@@ -178,11 +202,14 @@ export function ProposalForm({
             <Label htmlFor="customerId">
               Customer <span className="text-destructive">*</span>
             </Label>
-            <Select
+            <Combobox
               id="customerId"
               options={customerOptions}
-              {...register("customerId")}
-              aria-invalid={!!errors.customerId}
+              value={watchCustomerId ?? ""}
+              customText={watchNewCustomerName ?? ""}
+              placeholder="Select or type a customer name"
+              invalid={!!errors.customerId}
+              onChange={handleCustomerChange}
             />
             {errors.customerId && (
               <p className="text-sm text-destructive">
@@ -249,7 +276,7 @@ export function ProposalForm({
           </Button>
         </div>
 
-        {errors.items && (
+        {errors.items?.message && (
           <p className="text-sm text-destructive mb-4">
             {errors.items.message}
           </p>
@@ -264,14 +291,13 @@ export function ProposalForm({
               {/* Service */}
               <div className="space-y-2">
                 {index === 0 && <Label>Service</Label>}
-                <Select
+                <Combobox
                   options={serviceOptions}
-                  {...register(`items.${index}.serviceId`)}
-                  onChange={(e) => {
-                    register(`items.${index}.serviceId`).onChange(e);
-                    handleServiceChange(index, e.target.value);
-                  }}
-                  aria-invalid={!!errors.items?.[index]?.serviceId}
+                  value={watchItems[index]?.serviceId ?? ""}
+                  customText={watchItems[index]?.serviceName ?? ""}
+                  placeholder="Select or type a service"
+                  invalid={!!errors.items?.[index]?.serviceId}
+                  onChange={(next) => handleServiceChange(index, next)}
                 />
                 {errors.items?.[index]?.serviceId && (
                   <p className="text-sm text-destructive">
@@ -290,7 +316,10 @@ export function ProposalForm({
                   {...register(`items.${index}.quantity`, {
                     valueAsNumber: true,
                     onChange: (e) =>
-                      handleQuantityChange(index, parseFloat(e.target.value) || 0),
+                      handleQuantityChange(
+                        index,
+                        parseFloat(e.target.value) || 0
+                      ),
                   })}
                   aria-invalid={!!errors.items?.[index]?.quantity}
                 />
@@ -326,7 +355,7 @@ export function ProposalForm({
               <div className="space-y-2">
                 {index === 0 && <Label>Total</Label>}
                 <Input
-                  type="number"
+                  type="text"
                   readOnly
                   value={`$${(
                     (watchItems[index]?.quantity || 0) *
