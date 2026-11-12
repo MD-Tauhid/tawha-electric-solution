@@ -5,10 +5,14 @@ const nextConfig: NextConfig = {
   // Bundling it breaks that, so keep it as a normal Node package.
   serverExternalPackages: ["pdfkit"],
 
-  // Make sure the fonts and logo are included in the server build.
+  // Make sure pdfkit's runtime files, fonts and logo are included in the server build.
   // Needed on Vercel and other serverless hosts, harmless locally.
   outputFileTracingIncludes: {
-    "/api/**": ["./public/fonts/**", "./public/brand/**"],
+    "/api/**": [
+      "./node_modules/pdfkit/js/**/*",
+      "./public/fonts/**",
+      "./public/brand/**",
+    ],
   },
 };
 
