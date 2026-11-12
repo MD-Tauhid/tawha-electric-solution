@@ -82,6 +82,8 @@ const formatBnDate = (input: Date | string) => {
 /* -------------------------------------------------------------------------- */
 
 export function generateProposalPDF(data: ProposalPDFData): Promise<Buffer> {
+
+  console.log("data for proposal:",data);
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(FONT_REGULAR) || !fs.existsSync(FONT_BOLD)) {
       return reject(
