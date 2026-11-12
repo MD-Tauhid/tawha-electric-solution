@@ -191,7 +191,6 @@ export async function deleteService(id: string) {
   await prisma.service.delete({ where: { id } });
 
   revalidatePath("/admin/services");
-  redirect("/admin/services");
 }
 
 export async function toggleServiceActive(id: string) {

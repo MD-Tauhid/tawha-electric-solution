@@ -19,6 +19,9 @@ import { Footer } from "@/components/public/footer";
 export const metadata: Metadata = {
   title:
     "Tawha Electrical Solution — Professional Electrical Services in Bangladesh",
+  icons: {
+    icon: '/public/brand/logo-bg-less.png', // Points to public/custom-icon.png
+  },
   description:
     "Expert electrical engineering and services for residential, commercial, and industrial needs. Electrical planning, wiring, circuit design, lighting, installation, and maintenance by licensed engineers.",
   keywords: [
